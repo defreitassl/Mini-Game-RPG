@@ -1,8 +1,16 @@
 import flet as ft
 
-def main(page: ft.Page):
+def CreateAccount(page: ft.Page):
 
-    ...
+    page.add(
+        ft.Text(value="Hello World"),
+        ft.Container(
+            height=700,
+            width=500,
+            bgcolor='blue'
+        )
+    )
+
 
 if __name__=='__main__':
-    ft.app(target=main)
+    ft.app(target=CreateAccount)

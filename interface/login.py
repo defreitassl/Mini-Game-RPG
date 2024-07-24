@@ -1,6 +1,6 @@
 import flet as ft
 
-def main(page: ft.Page):
+def LoginPage(page: ft.Page):
 
     page.window_min_height = 900
     page.window_min_width = 700
@@ -19,6 +19,7 @@ def main(page: ft.Page):
                 ft.Text(
                     value="Bem vindo de volta ao Kingdoms...",
                     font_family='Medieval',
+                    no_wrap=True,
                     theme_style=ft.TextThemeStyle.HEADLINE_LARGE,
                     style=ft.TextStyle(
                         color=ft.colors.BLACK
@@ -65,13 +66,27 @@ def main(page: ft.Page):
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
-                        ft.Text(
-                            value='Ainda não tem uma conta?Clique Aqui!',
-                            theme_style=ft.TextThemeStyle.BODY_LARGE,
-                            style=ft.TextStyle(
-                            color=ft.colors.BLACK,
-                            font_family='Medieval',
-                            )
+                        ft.Row( 
+                            spacing=0,
+                            controls=[ 
+                                ft.Text(
+                                    value='Ainda não tem uma conta?',
+                                    theme_style=ft.TextThemeStyle.BODY_LARGE,
+                                    style=ft.TextStyle(
+                                        color=ft.colors.BLACK,
+                                        font_family='Medieval',
+                                    )
+                                ),
+                                ft.TextButton(
+                                    content=ft.Text(
+                                        value="Clique Aqui!",
+                                        font_family='Medieval',
+                                        size=20
+                                    ),
+                                    on_click=page.go('/create-account')
+                                )
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER
                         )
                     ]
                 )
@@ -103,4 +118,4 @@ def main(page: ft.Page):
     page.add(window)
 
 if __name__=='__main__':
-    ft.app(target=main, assets_dir='../assets')
+    ft.app(target=LoginPage, assets_dir='../assets')
