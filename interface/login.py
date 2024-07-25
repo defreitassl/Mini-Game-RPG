@@ -98,7 +98,7 @@ def LoginPage(page):
                 ),
                 alignment=ft.alignment.center,
                 expand=True,
-                image_src='assets/images/background.webp',  
+                image_src='images/background.webp',  
                 image_fit=ft.ImageFit.COVER,   
             ),
             expand=True,

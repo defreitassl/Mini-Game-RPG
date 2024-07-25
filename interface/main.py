@@ -8,14 +8,14 @@ def main(page: ft.Page):
     page.window_min_width = 700
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.padding = ft.padding.all(0)
+    page.padding = 0
     page.fonts = {
         'Medieval': 'fonts/Medieval.ttf',
         'Pixeled': 'fonts/Pixeled.ttf'
     }
     
-    login_view = ft.View(route='/login', controls=[LoginPage(page)])
-    create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)])
+    login_view = ft.View(route='/login', controls=[LoginPage(page)], padding=0)
+    create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)], padding=0)
 
 
     def route_change(route):
