@@ -8,7 +8,6 @@ def CreateAccountPage(page):
                     ft.Text(
                         value="Bem vindo ao Kingdoms...",
                         font_family='Medieval',
-                        no_wrap=True,
                         theme_style=ft.TextThemeStyle.HEADLINE_LARGE,
                         style=ft.TextStyle(
                             color=ft.colors.BLACK
@@ -61,13 +60,14 @@ def CreateAccountPage(page):
                                             "Criar Conta..",
                                             size=16,
                                             font_family='Pixeled',
-                                            color=ft.colors.BLACK
+                                            color=ft.colors.BLACK,
                                         ),
                                         style=ft.ButtonStyle(
                                             padding=20,
                                             shape=ft.RoundedRectangleBorder(radius=0),
                                             bgcolor=ft.colors.RED_800
                                         ),
+                                        on_click= lambda _: page.go('/create-character'),
                                         width=250
                                     ),
                                 ],
@@ -115,6 +115,6 @@ def CreateAccountPage(page):
         ),
         alignment=ft.alignment.center,
         expand=True,
-        image_src='images/background.webp',  
+        image_src='images/backgroundLogin.webp',  
         image_fit=ft.ImageFit.COVER,   
     )

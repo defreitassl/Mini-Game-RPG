@@ -9,7 +9,6 @@ def LoginPage(page):
                             ft.Text(
                                 value="Bem vindo de volta ao Kingdoms...",
                                 font_family='Medieval',
-                                no_wrap=True,
                                 theme_style=ft.TextThemeStyle.HEADLINE_LARGE,
                                 style=ft.TextStyle(
                                     color=ft.colors.BLACK
@@ -98,7 +97,7 @@ def LoginPage(page):
                 ),
                 alignment=ft.alignment.center,
                 expand=True,
-                image_src='images/background.webp',  
+                image_src='images/backgroundLogin.webp',  
                 image_fit=ft.ImageFit.COVER,   
             ),
             expand=True,

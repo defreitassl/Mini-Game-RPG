@@ -1,6 +1,7 @@
 import flet as ft
 from login import LoginPage
 from create_account import CreateAccountPage
+from create_characther import CreateCharacterPage, CreateCharacterAppBar
 
 def main(page: ft.Page):
 
@@ -16,6 +17,7 @@ def main(page: ft.Page):
     
     login_view = ft.View(route='/login', controls=[LoginPage(page)], padding=0)
     create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)], padding=0)
+    create_character_view = ft.View(route='/create-character', controls=[CreateCharacterPage(page)], padding=0)
 
 
     def route_change(route):
@@ -24,6 +26,9 @@ def main(page: ft.Page):
 
         if page.route == '/create-account':
             page.views.append(create_account_view)
+        
+        if page.route == '/create-character':
+            page.views.append(create_character_view)
         
         page.update()
 
