@@ -81,7 +81,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='forca'),
-                                create_stat_number(stat_name='forca'),
+                                strength := create_stat_number(stat_name='forca'),
                                 ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='forca'),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -104,7 +104,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='agilidade'),
-                                create_stat_number(stat_name='agilidade'),
+                                agility := create_stat_number(stat_name='agilidade'),
                                 ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='agilidade'),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -127,7 +127,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='vida'),
-                                create_stat_number(stat_name='vida'),
+                                hp := create_stat_number(stat_name='vida'),
                                 ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='vida'),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -150,7 +150,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='energia'),
-                                create_stat_number(stat_name='energia'),
+                                stamina := create_stat_number(stat_name='energia'),
                                 ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='energia'),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -173,7 +173,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='inteligencia'),
-                                create_stat_number(stat_name='inteligencia'),
+                                intelligence := create_stat_number(stat_name='inteligencia'),
                                 ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='inteligencia'),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER

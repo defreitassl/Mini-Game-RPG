@@ -46,6 +46,7 @@ def CreateCharacterPage(page):
         ],
         bgcolor=ft.colors.BLACK54,
         indicator_color=ft.colors.RED_900,
+        selected_index=0,
         indicator_shape=ft.ContinuousRectangleBorder(),
         expand=True,
         on_change= change_view,
