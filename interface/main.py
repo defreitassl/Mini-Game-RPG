@@ -1,7 +1,7 @@
 import flet as ft
 from login import LoginPage
 from create_account import CreateAccountPage
-from create_characther import CreateCharacterPage, CreateCharacterAppBar
+from create_characther import CreateCharacterPage
 
 def main(page: ft.Page):
 
@@ -10,6 +10,7 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.padding = 0
+    page.title = 'Kingdoms'
     page.fonts = {
         'Medieval': 'fonts/Medieval.ttf',
         'Pixeled': 'fonts/Pixeled.ttf'

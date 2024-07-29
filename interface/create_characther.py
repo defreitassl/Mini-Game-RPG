@@ -1,171 +1,75 @@
 import flet as ft
-
-
-def CreateCharacterAppBar():
-    return ft.AppBar(
-        center_title=True, 
-        title=ft.Text(
-            value='Crie seu personagem',
-            font_family='Medieval',
-            theme_style=ft.TextThemeStyle.DISPLAY_LARGE,
-            weight=ft.FontWeight.W_900,
-            color=ft.colors.BLACK
-        ),
-    )
-#Continuar criando o appBar
+from create_character_views.identity_menu import identity_menu_content
+from create_character_views.skills_menu import skills_menu_content
 
 
 def CreateCharacterPage(page):
 
-    def checkbox_feminine_change(e):
-        if feminine_check.value:
-            masculine_check.value = False
-            masculine_check.update()
-    
-    def checkbox_masculine_change(e):
-        if masculine_check.value:
-            feminine_check.value = False
-            feminine_check.update()
-
-    feminine_check = ft.Checkbox(
-        on_change=checkbox_feminine_change,
-        label='Feminino',
-        label_position=ft.LabelPosition.RIGHT,
-        label_style=ft.TextStyle(
-            font_family='Medieval',
-            weight=ft.FontWeight.W_900,
-            size=20
-        )
-    )
-
-    masculine_check = ft.Checkbox(
-        on_change=checkbox_masculine_change,
-        label='Masculino',
-        label_position=ft.LabelPosition.RIGHT,
-        label_style=ft.TextStyle(
-            font_family='Medieval',
-            weight=ft.FontWeight.W_900,
-            size=20
-        )
-    )
-
-    character_class = ft.Dropdown(
-        label='Selecione uma opção',
-        options=[
-            ft.dropdown.Option(key=1, text='Arqueiro', text_style=ft.TextStyle(font_family='Pixeled')),
-            ft.dropdown.Option(key=2, text='Clérigo', text_style=ft.TextStyle(font_family='Pixeled')),
-            ft.dropdown.Option(key=3, text='Curandeiro', text_style=ft.TextStyle(font_family='Pixeled')),
-            ft.dropdown.Option(key=4, text='Ladrão', text_style=ft.TextStyle(font_family='Pixeled')),
-            ft.dropdown.Option(key=5, text='Guerreiro', text_style=ft.TextStyle(font_family='Pixeled')),
-            ft.dropdown.Option(key=6, text='Mago', text_style=ft.TextStyle(font_family='Pixeled'))
-        ],
-        label_style=ft.TextStyle(font_family='Medieval', weight=ft.FontWeight.W_900, size=25),
-        bgcolor=ft.colors.GREY_700
-    )
+    actual_view = identity_menu_content
 
 
-    character_age = ft.Slider(
-        min=10,
-        max=150,
-        divisions=140,
-        label='{value} anos',
-        round=0
-    )
+    def change_view(e):
+        global actual_view
 
-    menu_content = ft.Column(
-        col=9,
-        controls=[
-            ft.Text(
-                value='Característcas não visuais',
-                font_family='Medieval',
-                theme_style=ft.TextThemeStyle.DISPLAY_SMALL,
-                weight=ft.FontWeight.W_900,
-                style=ft.TextStyle(
-                    color=ft.colors.BLACK
-                ),
-            ),
-            ft.Container(
-                content=ft.Column(
-                    controls=[
-                        ft.Text(
-                            value='Escolha uma classe para seu personagem...',
-                            font_family='Pixeled'
-                        ),
-                        character_class
-                    ],
-                ),
-                width=500
-            ),
-            ft.Container(
-                content=ft.Column(
-                    controls=[
-                        ft.Text(
-                            value='Defina a idade do personagem...',
-                            font_family='Pixeled',
-                        ),
-                        character_age
-                    ]
-                ),
-                width=500
-            ),
-            ft.Container(
-                content=ft.Column(
-                    controls=[
-                        ft.Text(
-                            value='Defina o sexo do personagem...',
-                            font_family='Pixeled'
-                        ),
-                        ft.Row(
-                            controls=[
-                                masculine_check,
-                                feminine_check,
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        )
-                    ]
-                ),
-                width=500
-            ),
-            ft.Container(
-                content=ft.ElevatedButton(
-                    content=ft.Text(
-                        "Aplicar",
-                        size=20,
-                        font_family='Pixeled',
-                        color=ft.colors.BLACK
-                    ),
-                    style=ft.ButtonStyle(
-                        padding=20,
-                        shape=ft.RoundedRectangleBorder(radius=0),
-                        bgcolor=ft.colors.GREY_500
-                    ),
-                    width=200
-                )
-            )
-        ],
-        alignment=ft.MainAxisAlignment.CENTER,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        spacing=50,
-    )
+        new_view = e.control.selected_index
+        
+        if new_view == 0:
+            actual_view = identity_menu_content
+        if new_view == 1:
+            actual_view = skills_menu_content
+        page.update()
+
 
     side_bar = ft.NavigationRail(
         col=1,
+        destinations=[
+            ft.NavigationRailDestination(
+                icon=ft.icons.PERSON_2,
+                label_content=ft.Text(value='Identidade', font_family='Medieval', color='white'),
+                padding=ft.padding.only(top=70)
+            ),
+            ft.NavigationRailDestination(
+                icon=ft.icons.ALIGN_VERTICAL_BOTTOM_SHARP,
+                label_content=ft.Text(value='Habilidades', font_family='Medieval', color='white'),
+                padding=ft.padding.only(top=70)
+            ),
+            ft.NavigationRailDestination(
+                icon=ft.icons.SETTINGS_ACCESSIBILITY_SHARP,
+                label_content=ft.Text(value='Características', font_family='Medieval', color='white'),
+                padding=ft.padding.only(top=70)
+            ),
+            ft.NavigationRailDestination(
+                icon=ft.icons.PERM_IDENTITY,
+                label_content=ft.Text(value='Perfil', font_family='Medieval', color='white'),
+                padding=ft.padding.only(top=70)
+            )
+        ],
+        bgcolor=ft.colors.BLACK54,
+        indicator_color=ft.colors.RED_900,
+        indicator_shape=ft.ContinuousRectangleBorder(),
+        expand=True,
+        on_change= change_view,
     )
 
     menu = ft.Container(
         content=ft.ResponsiveRow(
             controls=[
                 side_bar,
-                menu_content,
+                actual_view,
             ],
             columns=10,
             expand=True
         ),
-        bgcolor=ft.colors.AMBER_800,
+        bgcolor=ft.colors.BLACK54,
         height=700,
         width=1000,
         alignment=ft.alignment.center,
         border_radius=ft.border_radius.all(16),
+        shadow=ft.BoxShadow(
+            color=ft.colors.BLACK,
+            blur_radius=600,
+            blur_style=ft.ShadowBlurStyle.NORMAL
+        ),
     )
 
     window = ft.Container(
