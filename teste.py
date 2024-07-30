@@ -1,41 +1,60 @@
 import flet as ft
 
-points_left = 100
+index = 0
 
-# Dicionário para armazenar as referências aos campos de texto das habilidades
-stat_fields = {}
+def generator_colors():
+    global index
+    colors = {
+        1: ft.colors.BLACK,
+        2: ft.colors.BROWN_400,
+        3: ft.colors.BROWN_100,
+        4: ft.colors.PINK_100,
+        5: ft.colors.AMBER_100,
+    }
+    while True:
+        yield colors.get(index % 5 + 1, ft.colors.GREY)
+        index += 1
 
-def minus_click(e):
-    global points_left
-    stat_name = e.control.data
-    if points_left < 100 and int(stat_fields[stat_name].value) > 0:
-        stat_fields[stat_name].value = str(int(stat_fields[stat_name].value) - 1)
-        points_left += 1
-        points.value = f'PONTOS {points_left}'
-        e.page.update()
+color_gen = generator_colors()
 
-def plus_click(e):
-    global points_left
-    stat_name = e.control.data
-    if points_left > 0:
-        stat_fields[stat_name].value = str(int(stat_fields[stat_name].value) + 1)
-        points_left -= 1
-        points.value = f'PONTOS {points_left}'
-        e.page.update()
-
-def create_stat_number(stat_name):
-    field = ft.TextField(
-        value='0',
-        text_style=ft.TextStyle(font_family='Pixeled'),
-        text_align=ft.TextAlign.CENTER,
-        width=100,
-        disabled=True,
-        color='white',
-        border_color='white',
-        data=stat_name
+def create_color_button():
+    color = next(color_gen)
+    button = ft.ElevatedButton(
+        width=20,
+        bgcolor=color,
+        height=20,
+        style=ft.ButtonStyle(
+            shape=ft.ContinuousRectangleBorder()
+        )
     )
-    stat_fields[stat_name] = field
-    return field
+    return button
+
+character_height = ft.Slider(
+    min=10,
+    max=200,
+    divisions=190,
+    label='{value}cm',
+    round=0,
+    thumb_color=ft.colors.GREY_700,
+    active_color=ft.colors.RED_900,
+    inactive_color=ft.colors.WHITE, 
+)
+
+character_shape = ft.Dropdown(
+    label='Selecione uma opção',
+    options=[
+        ft.dropdown.Option(key=1, text='Muito Magro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key=2, text='Magro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key=3, text='Normal', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key=4, text='Forte', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key=5, text='Musculoso', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key=6, text='Obeso', text_style=ft.TextStyle(font_family='Pixeled'))
+    ],
+    label_style=ft.TextStyle(font_family='Medieval', weight=ft.FontWeight.W_900, size=25, color=ft.colors.BLACK),
+    bgcolor=ft.colors.GREY_700,
+    focused_color=ft.colors.BLACK,
+    border_color=ft.colors.BLACK
+)
 
 confirm_button = ft.ElevatedButton(
     content=ft.Text(
@@ -52,42 +71,27 @@ confirm_button = ft.ElevatedButton(
     width=200
 )
 
-skills_menu_content = ft.Column(
+attributes_menu_content = ft.Column(
     col=9,
     controls=[
         ft.Text(
-            value='Habilidades e Skills',
+            value='Características Físicas',
             font_family='Medieval',
             theme_style=ft.TextThemeStyle.DISPLAY_SMALL,
             weight=ft.FontWeight.W_900,
-            color=ft.colors.GREY_700
-        ),
-        points := ft.Text(
-            value=f'PONTOS {points_left}',
-            font_family='Medieval',
-            theme_style=ft.TextThemeStyle.HEADLINE_MEDIUM,
-            weight=ft.FontWeight.W_900,
-            color=ft.colors.GREY_700
+            style=ft.TextStyle(
+                color=ft.colors.GREY_700
+            ),
         ),
         ft.Container(
             content=ft.Column(
                 controls=[
                     ft.Text(
-                        value='Força',
+                        value='Defina a altura do seu personagem',
                         font_family='Pixeled',
                         color=ft.colors.GREY_700
                     ),
-                    ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='forca'),
-                                create_stat_number(stat_name='forca'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='forca'),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        alignment=ft.alignment.center
-                    )
+                    character_height
                 ],
             ),
             width=500
@@ -96,22 +100,12 @@ skills_menu_content = ft.Column(
             content=ft.Column(
                 controls=[
                     ft.Text(
-                        value='Agilidade',
+                        value='Tipo de porte físico',
                         font_family='Pixeled',
                         color=ft.colors.GREY_700
                     ),
-                    ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='agilidade'),
-                                create_stat_number(stat_name='agilidade'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='agilidade'),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        alignment=ft.alignment.center
-                    )
-                ],
+                    character_shape
+                ]
             ),
             width=500
         ),
@@ -119,68 +113,17 @@ skills_menu_content = ft.Column(
             content=ft.Column(
                 controls=[
                     ft.Text(
-                        value='Vida',
+                        value='Cor da pele',
                         font_family='Pixeled',
                         color=ft.colors.GREY_700
                     ),
-                    ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='vida'),
-                                create_stat_number(stat_name='vida'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='vida'),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        alignment=ft.alignment.center
+                    ft.Row(
+                        controls=[
+                            create_color_button() for _ in range(5)
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER
                     )
-                ],
-            ),
-            width=500
-        ),
-        ft.Container(
-            content=ft.Column(
-                controls=[
-                    ft.Text(
-                        value='Energia',
-                        font_family='Pixeled',
-                        color=ft.colors.GREY_700
-                    ),
-                    ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='energia'),
-                                create_stat_number(stat_name='energia'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='energia'),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        alignment=ft.alignment.center
-                    )
-                ],
-            ),
-            width=500
-        ),
-        ft.Container(
-            content=ft.Column(
-                controls=[
-                    ft.Text(
-                        value='Inteligência',
-                        font_family='Pixeled',
-                        color=ft.colors.GREY_700
-                    ),
-                    ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='inteligencia'),
-                                create_stat_number(stat_name='inteligencia'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='inteligencia'),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        alignment=ft.alignment.center
-                    )
-                ],
+                ]
             ),
             width=500
         ),
@@ -190,10 +133,11 @@ skills_menu_content = ft.Column(
     ],
     alignment=ft.MainAxisAlignment.CENTER,
     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-    spacing=20,
+    spacing=50,
 )
 
 def main(page: ft.Page):
-    page.add(skills_menu_content)
+    page.add(attributes_menu_content)
 
-ft.app(target=main)
+if __name__ == '__main__':
+    ft.app(target=main)

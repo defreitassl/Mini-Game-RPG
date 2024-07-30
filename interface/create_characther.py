@@ -1,11 +1,12 @@
 import flet as ft
 from create_character_views.identity_menu import identity_menu_content
 from create_character_views.skills_menu import skills_menu_content
+from create_character_views.attributes_menu import attributes_menu_content
 
 
 def CreateCharacterPage(page):
 
-    actual_view = identity_menu_content
+    actual_view = attributes_menu_content
 
 
     def change_view(e):
@@ -17,6 +18,8 @@ def CreateCharacterPage(page):
             actual_view = identity_menu_content
         if new_view == 1:
             actual_view = skills_menu_content
+        if new_view == 2:
+            actual_view = attributes_menu_content
         page.update()
 
 
@@ -80,6 +83,7 @@ def CreateCharacterPage(page):
         image_src='images/backgroundCharacter.webp',  
         image_fit=ft.ImageFit.COVER,
     )
+    page.update()
 
     return window
 
