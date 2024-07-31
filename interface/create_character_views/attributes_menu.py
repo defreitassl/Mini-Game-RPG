@@ -153,9 +153,3 @@ attributes_menu_content = ft.Column(
     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     spacing=50,
 )
-
-def main(page: ft.Page):
-    page.add(attributes_menu_content)
-
-if __name__ == '__main__':
-    ft.app(target=main)
