@@ -1,7 +1,9 @@
 import flet as ft
-from login import LoginPage
-from create_account import CreateAccountPage
-from create_characther import CreateCharacterPage
+from app.interface.login import LoginPage
+from app.interface.create_account import CreateAccountPage
+from app.interface.create_account import CreateAccountPage
+from app.interface.create_characther import CreateCharacterPage
+
 
 def main(page: ft.Page):
 
@@ -39,4 +41,4 @@ def main(page: ft.Page):
 
 
 
-ft.app(target=main, assets_dir='../assets')
+ft.app(target=main, assets_dir='./assets')

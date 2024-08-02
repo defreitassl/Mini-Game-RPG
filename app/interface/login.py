@@ -1,27 +1,29 @@
 import flet as ft
 
+username = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='archer_123',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    prefix=ft.Text(value='@'),
+    label='Seu nome de usuário..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.PERSON,
+)
+
+password = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='Ex:14Archer_##',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    label='Sua senha..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.PASSWORD,
+    password=True,
+    can_reveal_password=True,
+)
+
+
 def LoginPage(page):
 
-    username = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='archer_123',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        prefix=ft.Text(value='@'),
-        label='Seu nome de usuário..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.PERSON,
-    )
-
-    password = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='Ex:14Archer_##',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        label='Sua senha..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.PASSWORD,
-        password=True,
-        can_reveal_password=True,
-    )
 
     login_button = ft.ElevatedButton(
         content=ft.Text(

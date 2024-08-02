@@ -1,47 +1,50 @@
 import flet as ft
+from ..functions.collect_info import collect_info
+
+
+name = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='PrimeiroNome ÚltimoNome',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    label='Insira seu nome e sobrenome..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.PERSON,
+)
+
+username = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='archer_123',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    prefix=ft.Text(value='@'),
+    label='Insira seu nome de usuário..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.ALTERNATE_EMAIL_ROUNDED,
+)
+
+password = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='Ex:14Archer_##',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    label='Insira sua senha..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.PASSWORD,
+    password=True,
+    can_reveal_password=True,
+)
+
+password_confirmation = ft.TextField(
+    text_style=ft.TextStyle(font_family='Pixeled', size=10),
+    hint_text='Ex:14Archer_##',
+    hint_style=ft.TextStyle(font_family='Pixeled', size=10),
+    label='Confirme sua senha..',
+    label_style=ft.TextStyle(font_family='Pixeled', size=10),
+    icon=ft.icons.PASSWORD,
+    password=True,
+    can_reveal_password=True,
+)
+
 
 def CreateAccountPage(page):
-
-    name = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='PrimeiroNome ÚltimoNome',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        label='Insira seu nome e sobrenome..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.PERSON,
-    )
-
-    username = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='archer_123',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        prefix=ft.Text(value='@'),
-        label='Insira seu nome de usuário..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.ALTERNATE_EMAIL_ROUNDED,
-    )
-
-    password = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='Ex:14Archer_##',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        label='Insira sua senha..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.PASSWORD,
-        password=True,
-        can_reveal_password=True,
-    )
-
-    password_confirmation = ft.TextField(
-        text_style=ft.TextStyle(font_family='Pixeled', size=10),
-        hint_text='Ex:14Archer_##',
-        hint_style=ft.TextStyle(font_family='Pixeled', size=10),
-        label='Confirme sua senha..',
-        label_style=ft.TextStyle(font_family='Pixeled', size=10),
-        icon=ft.icons.PASSWORD,
-        password=True,
-        can_reveal_password=True,
-    )
 
     create_account_button = ft.ElevatedButton(
         content=ft.Text(
@@ -55,7 +58,7 @@ def CreateAccountPage(page):
             shape=ft.RoundedRectangleBorder(radius=0),
             bgcolor=ft.colors.RED_800
         ),
-        on_click= lambda _: page.go('/create-character'),
+        on_click= lambda _: collect_info(),
         width=250
     )
 
