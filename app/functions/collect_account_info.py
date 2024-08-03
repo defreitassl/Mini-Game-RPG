@@ -1,6 +1,6 @@
 from ..classes.user import User
 
-def collect_info(name: str, username: str, password: str, conf_password: str) -> None:
+def collect_account_info(name: str, username: str, password: str, conf_password: str) -> None:
     
     name_value = name.value
     username_value = username.value
