@@ -9,6 +9,8 @@ name = ft.TextField(
     label='Insira seu nome e sobrenome..',
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PERSON,
+    error_style=ft.TextStyle(color='black'),
+    helper_text= 'apenas nome e último nome / apenas letras permitidas'
 )
 
 username = ft.TextField(
@@ -19,6 +21,8 @@ username = ft.TextField(
     label='Insira seu nome de usuário..',
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.ALTERNATE_EMAIL_ROUNDED,
+    error_style=ft.TextStyle(color='black'),
+    helper_text= 'mínimo de 4 caracteres / proibido espaços'
 )
 
 password = ft.TextField(
@@ -30,6 +34,8 @@ password = ft.TextField(
     icon=ft.icons.PASSWORD,
     password=True,
     can_reveal_password=True,
+    error_style=ft.TextStyle(color='black'),
+    helper_text= 'mínimo 8 caracteres'
 )
 
 password_confirmation = ft.TextField(
@@ -41,6 +47,7 @@ password_confirmation = ft.TextField(
     icon=ft.icons.PASSWORD,
     password=True,
     can_reveal_password=True,
+    error_style=ft.TextStyle(color='black')
 )
 
 
@@ -58,7 +65,7 @@ def CreateAccountPage(page):
             shape=ft.RoundedRectangleBorder(radius=0),
             bgcolor=ft.colors.RED_800
         ),
-        on_click= lambda _: collect_info(),
+        on_click= lambda _: collect_info(name=name, username=username, password=password, conf_password=password_confirmation),
         width=250
     )
 
