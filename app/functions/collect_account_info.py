@@ -1,4 +1,6 @@
 from ..classes.user import User
+from ..database.users_operations import insert_user
+
 
 def collect_account_info(name: str, username: str, password: str, conf_password: str) -> None:
     
@@ -34,6 +36,8 @@ def collect_account_info(name: str, username: str, password: str, conf_password:
         
         new_user = User(name=name_value, username=username_value, password=password_value)
         print(new_user)
+        insert_user()
+
 
 
 def verify_name(name: str) -> bool:
