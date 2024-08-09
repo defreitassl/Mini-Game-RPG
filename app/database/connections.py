@@ -11,8 +11,10 @@ def create_conn():
             password='admin' 
         )
         if connection.is_connected():
+            cursor = connection.cursor()
             print("\n Database RPG connection successful! \n")
-            return connection
+            return connection, cursor
+    
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -27,10 +29,4 @@ def close_conn(connection, cursor, commit=True):
                 connection.commit()
             connection.close()
     except Exception as e:
-        print(f"Error closing connection or cursor: {e}")
-
-    
-conn = create_conn()
-cursor = conn.cursor()
-
-    
+        print(f"Erro de fechamento na conexão ou no cursor: {e}") 

@@ -1,3 +1,5 @@
+from ..database.users_operations import insert_user, verify_username_not_in_db
+
 
 class User:
     
@@ -8,8 +10,12 @@ class User:
         self.__password = password
         self._character = None
 
+    
+    def insert_user_in_db(self):
+        insert_user(name=self._name, username=self._username, password=self.__password)
 
-    def __get_password(self) -> str:
+
+    def _get_password(self) -> str:
         return self.__password
 
     

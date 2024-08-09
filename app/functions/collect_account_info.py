@@ -1,8 +1,8 @@
 from ..classes.user import User
-from ..database.users_operations import insert_user
+from ..database.users_operations import verify_username_not_in_db
 
 
-def collect_account_info(name: str, username: str, password: str, conf_password: str) -> None:
+def collect_account_info(page ,name: str, username: str, password: str, conf_password: str) -> None:
     
     name_value = name.value
     username_value = username.value
@@ -19,7 +19,7 @@ def collect_account_info(name: str, username: str, password: str, conf_password:
         name.update()
     
     if not username_valid:
-        username.error_text = 'Nome de usuário inválido'
+        username.error_text = 'Nome de usuário inválido, ou já existente'
         username.update()
 
     if not password_valid:
@@ -34,9 +34,16 @@ def collect_account_info(name: str, username: str, password: str, conf_password:
     
     if all([name_valid, username_valid, password_valid]) == True:
         
-        new_user = User(name=name_value, username=username_value, password=password_value)
-        print(new_user)
-        insert_user()
+        try:
+            new_user = User(name=name_value, username=username_value, password=password_value)
+            print(new_user)
+            new_user.insert_user_in_db()
+        
+        except Exception as e:
+            print(f'\n Erro inesperado ao criar o usuário: {e} \n')
+        
+        finally:
+            page.go('/create-character')
 
 
 
@@ -55,16 +62,23 @@ def verify_name(name: str) -> bool:
 
 def verify_username(username: str) -> bool:
 
-    ver_username = username.split()
+    user_not_in_db = verify_username_not_in_db(username)
 
-    if len(ver_username) > 1 or len(username) < 4:
-        print('NomeDeUsuárioInválido: Contém espaços ou menos de 4 caracteres \n')
-        return False
+    if user_not_in_db:
+
+        ver_username = username.split()
+
+        if len(ver_username) > 1 or len(username) < 4:
+            print('NomeDeUsuárioInválido: Contém espaços ou menos de 4 caracteres \n')
+            return False
+        
+        else:
+            print('Username ok \n')
+            return True
     
     else:
-        print('Username ok \n')
-        return True
-    
+        print('Esse nome de usuário já existe.')
+        return False
 
 def verify_password(password: str, conf_password: str) -> bool:
 

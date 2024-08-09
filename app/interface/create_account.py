@@ -65,7 +65,7 @@ def CreateAccountPage(page):
             shape=ft.RoundedRectangleBorder(radius=0),
             bgcolor=ft.colors.RED_800
         ),
-        on_click= lambda _: collect_account_info(name=name, username=username, password=password, conf_password=password_confirmation),
+        on_click= lambda _: collect_account_info(page, name=name, username=username, password=password, conf_password=password_confirmation),
         width=250
     )
 
