@@ -22,7 +22,7 @@ feminine_check = ft.Checkbox(
         color=ft.colors.GREY_700
     ),
     active_color=ft.colors.RED_900,
-    check_color=ft.colors.BLACK
+    check_color=ft.colors.BLACK,
 )
 
 masculine_check = ft.Checkbox(
@@ -42,12 +42,12 @@ masculine_check = ft.Checkbox(
 character_class = ft.Dropdown(
     label='Selecione uma opção',
     options=[
-        ft.dropdown.Option(key=1, text='Arqueiro', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=2, text='Clérigo', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=3, text='Curandeiro', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=4, text='Ladrão', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=5, text='Guerreiro', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=6, text='Mago', text_style=ft.TextStyle(font_family='Pixeled'))
+        ft.dropdown.Option(key='Arqueiro', text='Arqueiro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Clérigo', text='Clérigo', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Curandeiro', text='Curandeiro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Ladrão', text='Ladrão', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Guerreiro', text='Guerreiro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Mago', text='Mago', text_style=ft.TextStyle(font_family='Pixeled'))
     ],
     label_style=ft.TextStyle(font_family='Medieval', weight=ft.FontWeight.W_900, size=25, color=ft.colors.BLACK),
     bgcolor=ft.colors.GREY_700,
@@ -64,7 +64,7 @@ character_age = ft.Slider(
     round=0,
     thumb_color=ft.colors.GREY_700,
     active_color=ft.colors.RED_900,
-    inactive_color=ft.colors.WHITE, 
+    inactive_color=ft.colors.WHITE
 )
 
 confirm_button = ft.ElevatedButton(

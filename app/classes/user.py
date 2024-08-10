@@ -1,4 +1,4 @@
-from ..database.users_operations import insert_user, verify_username_not_in_db
+from ..database.users_operations import insert_user
 
 
 class User:

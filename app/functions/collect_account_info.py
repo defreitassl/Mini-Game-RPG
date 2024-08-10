@@ -2,7 +2,7 @@ from ..classes.user import User
 from ..database.users_operations import verify_username_not_in_db
 
 
-def collect_account_info(page ,name: str, username: str, password: str, conf_password: str) -> None:
+def collect_account_info(page ,name, username, password, conf_password) -> None:
     
     name_value = name.value
     username_value = username.value

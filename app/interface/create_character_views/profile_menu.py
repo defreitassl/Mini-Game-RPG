@@ -1,4 +1,10 @@
 import flet as ft
+from ...functions.collect_character_info import collect_character_info
+
+
+def collect_all_info():
+    ...
+    #Continuar com as importações gerais para passar os dados para a funçao collect_character_info e criar o objeto personagem
 
 
 def count_characters(e):
@@ -50,9 +56,9 @@ character_bio = ft.TextField(
 
 picture_gen = create_profile_avatars()
 
-confirm_button = ft.ElevatedButton(
+create_button = ft.ElevatedButton(
     content=ft.Text(
-        "Aplicar",
+        "CRIAR",
         size=20,
         font_family='Pixeled',
         color=ft.colors.GREY_700
@@ -62,7 +68,8 @@ confirm_button = ft.ElevatedButton(
         shape=ft.RoundedRectangleBorder(radius=0),
         bgcolor=ft.colors.GREY_500
     ),
-    width=200
+    width=200,
+    on_click=collect_all_info()
 )
 
 profile_menu_content = ft.Column(
@@ -108,7 +115,7 @@ profile_menu_content = ft.Column(
             width=500
         ),
         ft.Container(
-            content=confirm_button
+            content=create_button
         )
     ],
     alignment=ft.MainAxisAlignment.CENTER,
