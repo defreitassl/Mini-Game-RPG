@@ -1,6 +1,26 @@
 import flet as ft
 
 
+def apply_attributes(e):
+    if character_class.value and character_age.value and (masculine_check.value or feminine_check.value):
+        character_class.disabled = True
+        character_age.disabled = True
+        masculine_check.disabled = True
+        feminine_check.disabled = True
+        e.control.disabled = True  # Desabilita o botão que foi clicado
+        
+        character_class.update()
+        character_age.update()
+        masculine_check.update()
+        feminine_check.update()
+        e.control.content.color = ft.colors.GREY_900
+        e.control.bgcolor = ft.colors.GREY_600
+        e.control.update()
+
+    else:
+        print('\n Preencha todas as informações antes de confirmar \n')
+
+
 def checkbox_feminine_change(e):
     if feminine_check.value:
         masculine_check.value = False
@@ -23,6 +43,7 @@ feminine_check = ft.Checkbox(
     ),
     active_color=ft.colors.RED_900,
     check_color=ft.colors.BLACK,
+    disabled=False
 )
 
 masculine_check = ft.Checkbox(
@@ -36,7 +57,8 @@ masculine_check = ft.Checkbox(
         color=ft.colors.GREY_700
     ),
     active_color=ft.colors.RED_900,
-    check_color=ft.colors.BLACK
+    check_color=ft.colors.BLACK,
+    disabled=False
 )
 
 character_class = ft.Dropdown(
@@ -52,7 +74,8 @@ character_class = ft.Dropdown(
     label_style=ft.TextStyle(font_family='Medieval', weight=ft.FontWeight.W_900, size=25, color=ft.colors.BLACK),
     bgcolor=ft.colors.GREY_700,
     focused_color=ft.colors.BLACK,
-    border_color=ft.colors.BLACK
+    border_color=ft.colors.BLACK,
+    disabled=False
 )
 
 
@@ -64,7 +87,8 @@ character_age = ft.Slider(
     round=0,
     thumb_color=ft.colors.GREY_700,
     active_color=ft.colors.RED_900,
-    inactive_color=ft.colors.WHITE
+    inactive_color=ft.colors.WHITE,
+    disabled=False
 )
 
 confirm_button = ft.ElevatedButton(
@@ -72,14 +96,15 @@ confirm_button = ft.ElevatedButton(
         "Aplicar",
         size=20,
         font_family='Pixeled',
-        color=ft.colors.GREY_700
+        color=ft.colors.WHITE
     ),
     style=ft.ButtonStyle(
         padding=20,
         shape=ft.RoundedRectangleBorder(radius=0),
-        bgcolor=ft.colors.GREY_500
+        bgcolor=ft.colors.RED_900
     ),
-    width=200
+    width=200,
+    on_click= lambda e: apply_attributes(e)
 )
 
 identity_menu_content = ft.Column(

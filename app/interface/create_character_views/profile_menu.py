@@ -28,7 +28,7 @@ def create_profile_avatars():
             style=ft.ButtonStyle(
                 padding=0,
                 shape=ft.RoundedRectangleBorder(radius=35),
-            )
+            ),
         )
         yield button
 
@@ -58,7 +58,7 @@ picture_gen = create_profile_avatars()
 
 create_button = ft.ElevatedButton(
     content=ft.Text(
-        "CRIAR",
+        "CRIAR PERSONAGEM",
         size=20,
         font_family='Pixeled',
         color=ft.colors.GREY_700
@@ -66,9 +66,9 @@ create_button = ft.ElevatedButton(
     style=ft.ButtonStyle(
         padding=20,
         shape=ft.RoundedRectangleBorder(radius=0),
-        bgcolor=ft.colors.GREY_500
+        bgcolor=ft.colors.AMBER_700
     ),
-    width=200,
+    width=400,
     on_click=collect_all_info()
 )
 

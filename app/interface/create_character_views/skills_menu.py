@@ -1,9 +1,13 @@
 import flet as ft
 
+# Variável global para controlar os pontos restantes
 points_left = 100
 
 # Dicionário para armazenar as referências aos campos de texto das habilidades
 stat_fields = {}
+
+# Dicionário para armazenar as referências aos botões de adicionar e remover
+button_fields = {}
 
 def minus_click(e):
     global points_left
@@ -24,6 +28,7 @@ def plus_click(e):
         e.page.update()
 
 def create_stat_number(stat_name):
+    # Cria um campo de texto desabilitado para exibir a pontuação de uma habilidade
     field = ft.TextField(
         value='0',
         text_style=ft.TextStyle(font_family='Pixeled'),
@@ -34,24 +39,65 @@ def create_stat_number(stat_name):
         border_color='white',
         data=stat_name
     )
-    stat_fields[stat_name] = field
+    stat_fields[stat_name] = field  # Armazena a referência do campo de texto
     return field
 
+def create_stat_buttons(stat_name):
+    # Cria os botões de adicionar e remover e armazena suas referências
+    minus_button = ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data=stat_name)
+    plus_button = ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data=stat_name)
+    
+    button_fields[f'minus_{stat_name}'] = minus_button
+    button_fields[f'plus_{stat_name}'] = plus_button
+    
+    return minus_button, plus_button
+
+def apply_attributes(e):
+    global points_left
+    
+    # Verifica se todos os 100 pontos foram distribuídos
+    if points_left == 0:
+        # Desativa os botões de adicionar e remover para todas as habilidades
+        for stat_name in stat_fields:
+            minus_button = button_fields[f'minus_{stat_name}']
+            plus_button = button_fields[f'plus_{stat_name}']
+            
+            minus_button.disabled = True
+            plus_button.disabled = True
+            
+            # Atualiza os botões na interface
+            minus_button.update()
+            plus_button.update()
+        
+        # Desativa o botão de confirmação
+        confirm_button.disabled = True
+        confirm_button.content.color = ft.colors.GREY_900
+        confirm_button.bgcolor = ft.colors.GREY_600
+        confirm_button.update()
+        
+        print("Todos os pontos foram distribuídos e a edição foi bloqueada.")
+    
+    else:
+        print(f"Ainda restam {points_left} pontos para distribuir.")
+
+# Botão de confirmação
 confirm_button = ft.ElevatedButton(
     content=ft.Text(
         "Aplicar",
         size=20,
         font_family='Pixeled',
-        color=ft.colors.GREY_700
+        color=ft.colors.WHITE
     ),
     style=ft.ButtonStyle(
         padding=20,
         shape=ft.RoundedRectangleBorder(radius=0),
-        bgcolor=ft.colors.GREY_500
+        bgcolor=ft.colors.RED_900
     ),
-    width=200
+    width=200,
+    on_click=apply_attributes  # Associa a função ao clique
 )
 
+# Estrutura da página de habilidades e distribuição de pontos
 skills_menu_content = ft.Column(
     col=9,
     controls=[
@@ -69,6 +115,8 @@ skills_menu_content = ft.Column(
             weight=ft.FontWeight.W_900,
             color=ft.colors.GREY_700
         ),
+        
+        # Seção para a habilidade Força
         ft.Container(
             content=ft.Column(
                 controls=[
@@ -80,9 +128,8 @@ skills_menu_content = ft.Column(
                     ft.Container(
                         content=ft.Row(
                             controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='forca'),
-                                strength := create_stat_number(stat_name='forca'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='forca'),
+                                *create_stat_buttons(stat_name='forca'),  # Botões de menos e mais
+                                create_stat_number(stat_name='forca'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -92,6 +139,8 @@ skills_menu_content = ft.Column(
             ),
             width=500
         ),
+        
+        # Seção para a habilidade Agilidade
         ft.Container(
             content=ft.Column(
                 controls=[
@@ -103,9 +152,8 @@ skills_menu_content = ft.Column(
                     ft.Container(
                         content=ft.Row(
                             controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='agilidade'),
-                                agility := create_stat_number(stat_name='agilidade'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='agilidade'),
+                                *create_stat_buttons(stat_name='agilidade'),  # Botões de menos e mais
+                                create_stat_number(stat_name='agilidade'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -115,6 +163,8 @@ skills_menu_content = ft.Column(
             ),
             width=500
         ),
+        
+        # Seção para a habilidade Vida
         ft.Container(
             content=ft.Column(
                 controls=[
@@ -126,9 +176,8 @@ skills_menu_content = ft.Column(
                     ft.Container(
                         content=ft.Row(
                             controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='vida'),
-                                hp := create_stat_number(stat_name='vida'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='vida'),
+                                *create_stat_buttons(stat_name='vida'),  # Botões de menos e mais
+                                create_stat_number(stat_name='vida'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -138,6 +187,8 @@ skills_menu_content = ft.Column(
             ),
             width=500
         ),
+        
+        # Seção para a habilidade Energia
         ft.Container(
             content=ft.Column(
                 controls=[
@@ -149,9 +200,8 @@ skills_menu_content = ft.Column(
                     ft.Container(
                         content=ft.Row(
                             controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='energia'),
-                                stamina := create_stat_number(stat_name='energia'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='energia'),
+                                *create_stat_buttons(stat_name='energia'),  # Botões de menos e mais
+                                create_stat_number(stat_name='energia'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -161,6 +211,8 @@ skills_menu_content = ft.Column(
             ),
             width=500
         ),
+        
+        # Seção para a habilidade Inteligência
         ft.Container(
             content=ft.Column(
                 controls=[
@@ -172,9 +224,8 @@ skills_menu_content = ft.Column(
                     ft.Container(
                         content=ft.Row(
                             controls=[
-                                ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data='inteligencia'),
-                                intelligence := create_stat_number(stat_name='inteligencia'),
-                                ft.IconButton(icon=ft.icons.ADD, on_click=plus_click, icon_color='white', data='inteligencia'),
+                                *create_stat_buttons(stat_name='inteligencia'),  # Botões de menos e mais
+                                create_stat_number(stat_name='inteligencia'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -184,6 +235,8 @@ skills_menu_content = ft.Column(
             ),
             width=500
         ),
+        
+        # Botão de confirmação
         ft.Container(
             content=confirm_button
         )

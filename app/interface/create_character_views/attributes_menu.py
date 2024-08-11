@@ -2,31 +2,95 @@ import flet as ft
 
 index = 0
 
+# Dicionários para rastrear se uma cor de pele ou cabelo foi selecionada
+skin_color_selection = {}
+hair_color_selection = {}
+
+# Dicionários para associar cada botão ao nome da cor correspondente
+skin_color_names = {}
+hair_color_names = {}
+
+# Variáveis para armazenar a cor escolhida
+selected_skin_color = None
+selected_hair_color = None
+
+# Função chamada quando um botão de cor é clicado
+def select_color(e):
+    global selected_skin_color, selected_hair_color
+    
+    # Rastreia se uma cor foi selecionada e armazena o nome da cor
+    if e.control in skin_color_buttons:
+        skin_color_selection[e.control] = True
+        selected_skin_color = skin_color_names[e.control]
+    elif e.control in hair_color_buttons:
+        hair_color_selection[e.control] = True
+        selected_hair_color = hair_color_names[e.control]
+    
+    e.page.update()
+
+def apply_attributes(e):
+    # Verifica se todos os campos foram preenchidos
+    if (character_height.value is not None and
+        character_shape.value is not None and
+        any(skin_color_selection.values()) and
+        any(hair_color_selection.values())):
+
+        # Desativa todos os inputs para impedir edição futura
+        character_height.disabled = True
+        character_height.update()
+        
+        character_shape.disabled = True
+        character_shape.update()
+
+        for button in skin_color_buttons:
+            button.disabled = True
+            button.update()
+
+        for button in hair_color_buttons:
+            button.disabled = True
+            button.update()
+
+        confirm_button.disabled = True
+        confirm_button.content.color = ft.colors.GREY_900
+        confirm_button.bgcolor = ft.colors.GREY_600
+        confirm_button.update()
+
+    else:
+        print("\n Preencha todos os atributos antes de confirmar. \n")
+
 def generator_colors():
     global index
     colors = {
-        1: ft.colors.BROWN,
-        2: ft.colors.BROWN_600,
-        3: ft.colors.BROWN_300,
-        4: ft.colors.PINK_100,
-        5: ft.colors.AMBER_300,
+        1: ('Marrom', ft.colors.BROWN),
+        2: ('Pardo', ft.colors.BROWN_600),
+        3: ('Bronzeado', ft.colors.BROWN_300),
+        4: ('Rosado', ft.colors.PINK_100),
+        5: ('Amarelo', ft.colors.AMBER_300),
     }
     while True:
-        yield colors.get(index % 5 + 1, ft.colors.GREY)
+        yield colors.get(index % 5 + 1, ('Indefinido', ft.colors.GREY))
         index += 1
 
 color_gen = generator_colors()
 
-def create_color_button():
-    color = next(color_gen)
+def create_color_button(color_type):
+    name, color = next(color_gen)
     button = ft.ElevatedButton(
         width=20,
         bgcolor=color,
         height=20,
         style=ft.ButtonStyle(
             shape=ft.ContinuousRectangleBorder()
-        )
+        ),
+        on_click=select_color  # Atribui a função de seleção de cor ao clicar
     )
+    
+    # Associa o botão ao nome da cor
+    if color_type == 'skin':
+        skin_color_names[button] = name
+    elif color_type == 'hair':
+        hair_color_names[button] = name
+
     return button
 
 character_height = ft.Slider(
@@ -61,15 +125,27 @@ confirm_button = ft.ElevatedButton(
         "Aplicar",
         size=20,
         font_family='Pixeled',
-        color=ft.colors.GREY_700
+        color=ft.colors.WHITE
     ),
     style=ft.ButtonStyle(
         padding=20,
         shape=ft.RoundedRectangleBorder(radius=0),
-        bgcolor=ft.colors.GREY_500
+        bgcolor=ft.colors.RED_900
     ),
-    width=200
+    width=200,
+    on_click=apply_attributes  # Associa a função ao clique
 )
+
+# Criação dos botões de cor da pele e do cabelo
+skin_color_buttons = [create_color_button('skin') for _ in range(5)]
+hair_color_buttons = [create_color_button('hair') for _ in range(5)]
+
+# Inicializa os dicionários de seleção como False
+for button in skin_color_buttons:
+    skin_color_selection[button] = False
+
+for button in hair_color_buttons:
+    hair_color_selection[button] = False
 
 attributes_menu_content = ft.Column(
     col=9,
@@ -118,9 +194,7 @@ attributes_menu_content = ft.Column(
                         color=ft.colors.GREY_700
                     ),
                     ft.Row(
-                        controls=[
-                            create_color_button() for _ in range(5)
-                        ],
+                        controls=skin_color_buttons,
                         alignment=ft.MainAxisAlignment.CENTER
                     )
                 ]
@@ -136,9 +210,7 @@ attributes_menu_content = ft.Column(
                         color=ft.colors.GREY_700
                     ),
                     ft.Row(
-                        controls=[
-                            create_color_button() for _ in range(5)
-                        ],
+                        controls=hair_color_buttons,
                         alignment=ft.MainAxisAlignment.CENTER
                     )
                 ]

@@ -5,8 +5,8 @@ from .create_character_views.attributes_menu import attributes_menu_content
 from .create_character_views.profile_menu import profile_menu_content
 
 
-def increase_view_index(index):
-    CreateCharacterPage.controls.content.content.controls[-1] = index
+#def increase_view_index(index):
+#    CreateCharacterPage.controls.content.content.controls[-1] = index
 
 
 def CreateCharacterPage(page):
