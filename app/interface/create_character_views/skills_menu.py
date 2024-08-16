@@ -70,10 +70,10 @@ def apply_attributes(e):
             plus_button.update()
         
         # Desativa o botão de confirmação
-        confirm_button.disabled = True
-        confirm_button.content.color = ft.colors.GREY_900
-        confirm_button.bgcolor = ft.colors.GREY_600
-        confirm_button.update()
+        skills_confirm_button.disabled = True
+        skills_confirm_button.content.color = ft.colors.GREY_900
+        skills_confirm_button.bgcolor = ft.colors.GREY_600
+        skills_confirm_button.update()
         
         print("Todos os pontos foram distribuídos e a edição foi bloqueada.")
     
@@ -81,7 +81,7 @@ def apply_attributes(e):
         print(f"Ainda restam {points_left} pontos para distribuir.")
 
 # Botão de confirmação
-confirm_button = ft.ElevatedButton(
+skills_confirm_button = ft.ElevatedButton(
     content=ft.Text(
         "Aplicar",
         size=20,
@@ -129,7 +129,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 *create_stat_buttons(stat_name='forca'),  # Botões de menos e mais
-                                create_stat_number(stat_name='forca'),   # Campo de texto desabilitado
+                                forca := create_stat_number(stat_name='forca'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -153,7 +153,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 *create_stat_buttons(stat_name='agilidade'),  # Botões de menos e mais
-                                create_stat_number(stat_name='agilidade'),   # Campo de texto desabilitado
+                                agilidade := create_stat_number(stat_name='agilidade'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -177,7 +177,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 *create_stat_buttons(stat_name='vida'),  # Botões de menos e mais
-                                create_stat_number(stat_name='vida'),   # Campo de texto desabilitado
+                                vida := create_stat_number(stat_name='vida'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -201,7 +201,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 *create_stat_buttons(stat_name='energia'),  # Botões de menos e mais
-                                create_stat_number(stat_name='energia'),   # Campo de texto desabilitado
+                                energia := create_stat_number(stat_name='energia'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -225,7 +225,7 @@ skills_menu_content = ft.Column(
                         content=ft.Row(
                             controls=[
                                 *create_stat_buttons(stat_name='inteligencia'),  # Botões de menos e mais
-                                create_stat_number(stat_name='inteligencia'),   # Campo de texto desabilitado
+                                inteligencia := create_stat_number(stat_name='inteligencia'),   # Campo de texto desabilitado
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -238,7 +238,7 @@ skills_menu_content = ft.Column(
         
         # Botão de confirmação
         ft.Container(
-            content=confirm_button
+            content=skills_confirm_button
         )
     ],
     alignment=ft.MainAxisAlignment.CENTER,

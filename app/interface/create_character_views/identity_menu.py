@@ -91,7 +91,7 @@ character_age = ft.Slider(
     disabled=False
 )
 
-confirm_button = ft.ElevatedButton(
+identity_confirm_button = ft.ElevatedButton(
     content=ft.Text(
         "Aplicar",
         size=20,
@@ -165,7 +165,7 @@ identity_menu_content = ft.Column(
             width=500
         ),
         ft.Container(
-            content=confirm_button
+            content=identity_confirm_button
         )
     ],
     alignment=ft.MainAxisAlignment.CENTER,

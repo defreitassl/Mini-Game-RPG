@@ -11,7 +11,7 @@ class User:
         self._character = None
 
     
-    def insert_user_in_db(self):
+    def _insert_user_in_db(self):
         insert_user(name=self._name, username=self._username, password=self.__password)
 
 

@@ -1,16 +1,53 @@
 import flet as ft
 from ...functions.collect_character_info import collect_character_info
+from .identity_menu import identity_confirm_button, character_class, character_age, feminine_check
+from .skills_menu import skills_confirm_button, forca, agilidade, energia, vida, inteligencia
+from .attributes_menu import attributes_confirm_button, character_shape, character_height, get_skin_color, get_hair_color
 
 
 def collect_all_info():
-    ...
-    #Continuar com as importações gerais para passar os dados para a funçao collect_character_info e criar o objeto personagem
+    
+    if len(character_bio.value) > 50 and selected_picture_src is not None:
+        if all([identity_confirm_button.disabled, skills_confirm_button.disabled, attributes_confirm_button.disabled]):
+            gender = 'Feminino' if feminine_check.value else 'Masculino'
+
+            skin_color = get_skin_color()
+            hair_color = get_hair_color()
+            
+            # Chama a função de coleta com todos os atributos
+            collect_character_info(
+                category=character_class.value, 
+                age=character_age.value, 
+                gender=gender,
+                strength=forca.value, 
+                agility=agilidade.value, 
+                health=vida.value,
+                stamina=energia.value, 
+                intelligence=inteligencia.value, 
+                body_shape=character_shape.value,
+                height=character_height.value, 
+                skin_color=skin_color, 
+                hair_color=hair_color,
+                biography=character_bio.value, 
+                picture_src=selected_picture_src
+            )
+        else:
+            print("Por favor, preencha todos os campos antes de criar o personagem.")
+    else:
+        print("A biografia deve conter no mínimo 50 caracteres e uma foto de perfil deve ser selecionada.")
+
 
 
 def count_characters(e):
     num_characters = len(e.control.value)
     e.control.counter_text = num_characters
     e.control.update()
+
+
+selected_picture_src = None
+def select_picture(e):
+    global selected_picture_src
+    selected_picture_src =  e.control.data
 
 
 index = 0
@@ -29,6 +66,8 @@ def create_profile_avatars():
                 padding=0,
                 shape=ft.RoundedRectangleBorder(radius=35),
             ),
+            data=f'images/avatar{index}.webp',
+            on_click=lambda e: select_picture(e)
         )
         yield button
 
@@ -69,7 +108,7 @@ create_button = ft.ElevatedButton(
         bgcolor=ft.colors.AMBER_700
     ),
     width=400,
-    on_click=collect_all_info()
+    on_click= lambda _: collect_all_info()
 )
 
 profile_menu_content = ft.Column(

@@ -14,26 +14,32 @@ hair_color_names = {}
 selected_skin_color = None
 selected_hair_color = None
 
+def get_skin_color():
+    return selected_skin_color
+
+def get_hair_color():
+    return selected_hair_color
+
 # Função chamada quando um botão de cor é clicado
 def select_color(e):
     global selected_skin_color, selected_hair_color
-    
-    # Rastreia se uma cor foi selecionada e armazena o nome da cor
+
+    # Verifica qual tipo de cor está sendo selecionado
     if e.control in skin_color_buttons:
         skin_color_selection[e.control] = True
         selected_skin_color = skin_color_names[e.control]
     elif e.control in hair_color_buttons:
         hair_color_selection[e.control] = True
         selected_hair_color = hair_color_names[e.control]
-    
+
     e.page.update()
 
 def apply_attributes(e):
     # Verifica se todos os campos foram preenchidos
     if (character_height.value is not None and
         character_shape.value is not None and
-        any(skin_color_selection.values()) and
-        any(hair_color_selection.values())):
+        selected_skin_color is not None and
+        selected_hair_color is not None):
 
         # Desativa todos os inputs para impedir edição futura
         character_height.disabled = True
@@ -50,10 +56,10 @@ def apply_attributes(e):
             button.disabled = True
             button.update()
 
-        confirm_button.disabled = True
-        confirm_button.content.color = ft.colors.GREY_900
-        confirm_button.bgcolor = ft.colors.GREY_600
-        confirm_button.update()
+        attributes_confirm_button.disabled = True
+        attributes_confirm_button.content.color = ft.colors.GREY_900
+        attributes_confirm_button.bgcolor = ft.colors.GREY_600
+        attributes_confirm_button.update()
 
     else:
         print("\n Preencha todos os atributos antes de confirmar. \n")
@@ -107,12 +113,12 @@ character_height = ft.Slider(
 character_shape = ft.Dropdown(
     label='Selecione uma opção',
     options=[
-        ft.dropdown.Option(key=1, text='Muito Magro', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=2, text='Magro', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=3, text='Normal', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=4, text='Forte', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=5, text='Musculoso', text_style=ft.TextStyle(font_family='Pixeled')),
-        ft.dropdown.Option(key=6, text='Obeso', text_style=ft.TextStyle(font_family='Pixeled'))
+        ft.dropdown.Option(key='Muito Magro', text='Muito Magro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Magro', text='Magro', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Normal', text='Normal', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Forte', text='Forte', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Musculoso', text='Musculoso', text_style=ft.TextStyle(font_family='Pixeled')),
+        ft.dropdown.Option(key='Obeso', text='Obeso', text_style=ft.TextStyle(font_family='Pixeled'))
     ],
     label_style=ft.TextStyle(font_family='Medieval', weight=ft.FontWeight.W_900, size=25, color=ft.colors.BLACK),
     bgcolor=ft.colors.GREY_700,
@@ -120,7 +126,7 @@ character_shape = ft.Dropdown(
     border_color=ft.colors.BLACK
 )
 
-confirm_button = ft.ElevatedButton(
+attributes_confirm_button = ft.ElevatedButton(
     content=ft.Text(
         "Aplicar",
         size=20,
@@ -218,7 +224,7 @@ attributes_menu_content = ft.Column(
             width=500
         ),
         ft.Container(
-            content=confirm_button
+            content=attributes_confirm_button
         )
     ],
     alignment=ft.MainAxisAlignment.CENTER,

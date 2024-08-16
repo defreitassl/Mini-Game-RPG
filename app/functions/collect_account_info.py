@@ -37,7 +37,7 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
         try:
             new_user = User(name=name_value, username=username_value, password=password_value)
             print(new_user)
-            new_user.insert_user_in_db()
+            new_user._insert_user_in_db()
         
         except Exception as e:
             print(f'\n Erro inesperado ao criar o usuário: {e} \n')
