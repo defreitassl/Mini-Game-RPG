@@ -1,13 +1,14 @@
-from ..database.characters_operations import insert_character
+from ..database.characters_operations import insert_character, add_character_id_to_user
 
 class Character:
 
-    def __init__(self, category: str, age: int, gender: str,
-        strength: int, agility: int, health: int,
+    def __init__(self, user_id: int, category: str, age: int, 
+        gender: str, strength: int, agility: int, health: int,
         stamina: int, intelligence: int, height: int,
         body_shape: str, skin_color: str, hair_color: str,
         biography: str, picture_src: str) -> None:
         
+        self.user_id = user_id
         self.category = category
         self.age = age
         self.gender = gender
@@ -25,7 +26,24 @@ class Character:
 
 
     def _insert_character_in_db(self):
-        insert_character()
+        insert_character(
+            user_id=self.user_id,
+            category=self.category,
+            age=self.age,
+            gender=self.gender,
+            strength=self.strength,
+            agility=self.agility,
+            health=self.health,
+            stamina=self.stamina,
+            intelligence=self.intelligence,
+            height=self.height,
+            body_shape=self.body_shape,
+            skin_color=self.skin_color,
+            hair_color=self.hair_color,
+            biography=self.biography,
+            picture_src=self.picture
+        )
+        add_character_id_to_user()
 
     
     def __str__(self):

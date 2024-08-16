@@ -1,5 +1,6 @@
 from ..classes.user import User
-from ..database.users_operations import verify_username_not_in_db
+from ..database.users_operations import verify_username_not_in_db, get_user_id_from_db
+from ...main import set_logged_user_id
 
 
 def collect_account_info(page ,name, username, password, conf_password) -> None:
@@ -38,6 +39,11 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
             new_user = User(name=name_value, username=username_value, password=password_value)
             print(new_user)
             new_user._insert_user_in_db()
+            user_id = get_user_id_from_db(username_value)
+            if user_id:
+                set_logged_user_id(user_id=user_id)
+            else:
+                pass
         
         except Exception as e:
             print(f'\n Erro inesperado ao criar o usuário: {e} \n')
