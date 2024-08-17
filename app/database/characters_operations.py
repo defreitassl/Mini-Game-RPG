@@ -35,14 +35,26 @@ def insert_character(user_id: int, category: str, age: int,
                     picture_src
                 ]
             )
-        print('Personagem adicionado com sucesso.')
+        print('\n Personagem adicionado com sucesso. \n')
         close_conn(conn, cursor)
     
     except Exception as e:
-        print(f'Erro ao adicionar personagem ao banco de dados: {e}')
+        print(f'\n Erro ao adicionar personagem ao banco de dados: {e} \n')
 
 
-def add_character_id_to_user():
-    ...
+def add_character_id_to_user(current_user_id: int, character_id: int) -> bool:
+    try:
+        conn, cursor = create_conn()
+        query = """
+            UPDATE users
+            SET character_id = %s
+            WHERE user_id = %s
+        """
+        cursor.execute(query, [character_id, current_user_id])
+        print(f' \n Usuário de id {current_user_id} atualizado com sucesso \n')
+        close_conn(conn, cursor, )
+        return True
 
-    #Continuar a função para adicionar o id do personagem a ao seu usuário correspondente no db.
+    except Exception as e:
+        print(f'\n Erro ao atualizar o usuário: {e}')
+        return False

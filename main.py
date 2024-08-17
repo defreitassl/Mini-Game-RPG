@@ -1,16 +1,7 @@
 import flet as ft
 from app.interface.login import LoginPage
 from app.interface.create_account import CreateAccountPage
-from app.interface.create_account import CreateAccountPage
 from app.interface.create_characther import CreateCharacterPage
-
-current_user_id = None
-
-
-def set_logged_user_id(user_id: int):
-    global current_user_id
-    current_user_id = user_id
-    print(f'\n Usuário de ID igual a {current_user_id} logado \n')
 
 
 def main(page: ft.Page):

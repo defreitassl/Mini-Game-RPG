@@ -1,6 +1,6 @@
 from ..classes.user import User
 from ..database.users_operations import verify_username_not_in_db, get_user_id_from_db
-from ...main import set_logged_user_id
+from ..current_user import set_logged_user_id
 
 
 def collect_account_info(page ,name, username, password, conf_password) -> None:

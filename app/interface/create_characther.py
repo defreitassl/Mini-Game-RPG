@@ -89,6 +89,3 @@ def CreateCharacterPage(page):
     page.update()
 
     return window
-
-if __name__=='__main__':
-    ft.app(target=CreateCharacterPage)

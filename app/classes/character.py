@@ -2,6 +2,8 @@ from ..database.characters_operations import insert_character, add_character_id_
 
 class Character:
 
+    character_id = 1
+
     def __init__(self, user_id: int, category: str, age: int, 
         gender: str, strength: int, agility: int, health: int,
         stamina: int, intelligence: int, height: int,
@@ -43,7 +45,13 @@ class Character:
             biography=self.biography,
             picture_src=self.picture
         )
-        add_character_id_to_user()
+        update_user = add_character_id_to_user(self.user_id, Character.character_id)
+        Character.character_id += 1
+        
+        if update_user:
+            print("Usuário atualizado com sucesso.")
+        else:
+            print("Falha ao atualizar o usuário.")
 
     
     def __str__(self):
