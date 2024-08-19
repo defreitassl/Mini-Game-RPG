@@ -2,6 +2,7 @@ import flet as ft
 from app.interface.login import LoginPage
 from app.interface.create_account import CreateAccountPage
 from app.interface.create_characther import CreateCharacterPage
+from app.interface.home_page import HomePage
 
 
 def main(page: ft.Page):
@@ -20,6 +21,7 @@ def main(page: ft.Page):
     login_view = ft.View(route='/login', controls=[LoginPage(page)], padding=0)
     create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)], padding=0)
     create_character_view = ft.View(route='/create-character', controls=[CreateCharacterPage(page)], padding=0)
+    home_page_view = ft.View(route='/home-page', controls=[HomePage(page)], padding=0)
 
 
     def route_change(route):
@@ -31,6 +33,9 @@ def main(page: ft.Page):
         
         if page.route == '/create-character':
             page.views.append(create_character_view)
+
+        if page.route == '/home-page':
+            page.views.append(home_page_view)
         
         page.update()
 

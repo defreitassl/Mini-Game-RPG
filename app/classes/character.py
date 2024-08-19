@@ -1,8 +1,7 @@
-from ..database.characters_operations import insert_character, add_character_id_to_user
+from ..database.characters_operations import insert_character, add_character_id_to_user, get_character_id_from_db
 
 class Character:
 
-    character_id = 1
 
     def __init__(self, user_id: int, category: str, age: int, 
         gender: str, strength: int, agility: int, health: int,
@@ -45,8 +44,8 @@ class Character:
             biography=self.biography,
             picture_src=self.picture
         )
-        update_user = add_character_id_to_user(self.user_id, Character.character_id)
-        Character.character_id += 1
+        character_id = get_character_id_from_db(self.user_id)
+        update_user = add_character_id_to_user(self.user_id, character_id)
         
         if update_user:
             print("Usuário atualizado com sucesso.")

@@ -58,3 +58,30 @@ def add_character_id_to_user(current_user_id: int, character_id: int) -> bool:
     except Exception as e:
         print(f'\n Erro ao atualizar o usuário: {e}')
         return False
+    
+
+def get_character_id_from_db(user_id: int):
+    
+    try:
+        conn, cursor = create_conn()
+        query = """
+            SELECT character_id FROM characters
+            WHERE user_id = %s
+        """
+        cursor.execute(query, [user_id])
+        rows = cursor.fetchall()
+        close_conn(conn, cursor, commit=False)
+
+        if not rows:
+            print('\n ID de usuário não encontrado \n')
+            return None
+        
+        else:
+            character_id = rows[0][0]
+            print(f'\n ID de personagem encontrado e coletado. \n')
+            return character_id
+
+    except Exception as e:
+        print(f'Erro ao buscar ID de usuário no banco de dados: {e}')
+        return None
+
