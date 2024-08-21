@@ -37,7 +37,8 @@ def LoginPage(page):
             shape=ft.RoundedRectangleBorder(radius=0),
             bgcolor=ft.colors.RED_800
         ),
-        width=250
+        width=250,
+        on_click=lambda _: page.go('/home-page')
     )
 
     components = ft.Column(

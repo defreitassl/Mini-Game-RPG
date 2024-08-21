@@ -3,14 +3,64 @@ import flet as ft
 
 def HomePage(page):
 
+
+    def close_banner(e):
+        page.banner.open = False 
+        page.update()
+
+
+    def open_banner(e):
+        page.banner = bn1 
+        bn1.open=True 
+        page.update()
+
+
+    bn1 = ft.Banner(
+        content=ft.Text(value="Esta função está temporariamente indisponível"), 
+
+        actions=[
+            ft.TextButton(text="Cancelar", style=ft.ButtonStyle(color=ft.colors.RED), on_click=close_banner),
+        ],
+        content_padding=ft.padding.all(25),
+        leading=ft.Icon(name=ft.icons.WARNING_AMBER), 
+        force_actions_below=True, 
+        bgcolor=ft.colors.AMBER_100
+    )
+
+    menu_button = ft.IconButton()
+
+    account_button = ft.ElevatedButton()
+    #Continuar a customização do botões
+
+    nav_bar = ft.ResponsiveRow(
+        controls=[
+            ft.Container(
+                col=5,
+                content=ft.Text(
+                    "Kingdoms",
+                    font_family='Medieval',
+                    color=ft.colors.WHITE54,
+                    size=100,
+                    weight=ft.FontWeight.W_900,
+                )
+            ),
+
+
+        ],
+        columns=10,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+    )
+
     game_mode_img = ft.Row(
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[
             ft.Container(
                 image_src='images/game_mode.webp',
-                image_fit=ft.ImageFit.COVER
+                image_fit=ft.ImageFit.CONTAIN,
+                width=350,
+                height=200
             )
-        ],
+        ]
     )
 
     buttons = ft.Column(
@@ -28,6 +78,7 @@ def HomePage(page):
                     bgcolor=ft.colors.GREEN_500
                 ),
                 width=300,
+                on_click= open_banner
             ),
             ft.ElevatedButton(
                 content=ft.Text(
@@ -42,6 +93,7 @@ def HomePage(page):
                     bgcolor=ft.colors.AMBER_700
                 ),
                 width=300,
+                on_click= open_banner
             ),
         ]
     )
@@ -49,17 +101,16 @@ def HomePage(page):
     menu = ft.Container(
         content=ft.Column(
             controls=[
-                #nav_bar,
+                nav_bar,
                 game_mode_img,
                 buttons,
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-            alignment=ft.MainAxisAlignment.CENTER,
-            expand=True
+            expand=True,
         ),
         bgcolor=ft.colors.BLACK54,
-        height=700,
-        width=1000,
+        height=750,
+        width=1100,
         alignment=ft.alignment.center,
         border_radius=ft.border_radius.all(16),
         shadow=ft.BoxShadow(
