@@ -1,4 +1,5 @@
 import flet as ft
+from ..functions.verify_login_info import verify_login_info
 
 username = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
@@ -8,6 +9,7 @@ username = ft.TextField(
     label='Seu nome de usuário..',
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PERSON,
+    error_style=ft.TextStyle(color=ft.colors.BLACK)
 )
 
 password = ft.TextField(
@@ -19,6 +21,7 @@ password = ft.TextField(
     icon=ft.icons.PASSWORD,
     password=True,
     can_reveal_password=True,
+    error_style=ft.TextStyle(color=ft.colors.BLACK)
 )
 
 
@@ -38,7 +41,7 @@ def LoginPage(page):
             bgcolor=ft.colors.RED_800
         ),
         width=250,
-        on_click=lambda _: page.go('/home-page')
+        on_click=lambda _: verify_login_info(page, username, password)
     )
 
     components = ft.Column(
@@ -79,7 +82,7 @@ def LoginPage(page):
                                     font_family='Medieval',
                                     size=20
                                 ),
-                                on_click=lambda _: page.go('/create-account')
+                                on_click= lambda _: page.go('/create-account'), 
                             )
                         ],
                         alignment=ft.MainAxisAlignment.CENTER

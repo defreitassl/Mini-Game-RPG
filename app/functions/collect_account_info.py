@@ -42,15 +42,12 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
             user_id = get_user_id_from_db(username_value)
             if user_id:
                 set_logged_user_id(user_id=user_id)
+                page.go('/create-character')
             else:
                 pass
         
         except Exception as e:
             print(f'\n Erro inesperado ao criar o usuário: {e} \n')
-        
-        finally:
-            page.go('/create-character')
-
 
 
 def verify_name(name: str) -> bool:

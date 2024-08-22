@@ -1,19 +1,15 @@
 import flet as ft
 
-
-def HomePage(page):
-
+def HomePage(page, picture_src=None):
 
     def close_banner(e):
         page.banner.open = False 
         page.update()
 
-
     def open_banner(e):
         page.banner = bn1 
         bn1.open=True 
         page.update()
-
 
     bn1 = ft.Banner(
         content=ft.Text(value="Esta função está temporariamente indisponível"), 
@@ -27,10 +23,29 @@ def HomePage(page):
         bgcolor=ft.colors.AMBER_100
     )
 
-    menu_button = ft.IconButton()
+    menu_button = ft.IconButton(
+        icon=ft.icons.MENU_OUTLINED,
+        icon_color=ft.colors.WHITE54,
+        height=100,
+        icon_size=70,
+        col=1
+    )
 
-    account_button = ft.ElevatedButton()
-    #Continuar a customização do botões
+    # O valor de picture_src será recebido como parâmetro
+    picture = ft.CircleAvatar(
+        background_image_src=picture_src,  # Atualiza a imagem do avatar com o caminho da imagem passada
+        radius=35,
+        expand=True
+    )
+
+    account_button = ft.ElevatedButton(
+        content=picture,
+        style=ft.ButtonStyle(
+            padding=0,
+            shape=ft.CircleBorder(),
+        ),
+        col=1
+    )
 
     nav_bar = ft.ResponsiveRow(
         controls=[
@@ -44,21 +59,23 @@ def HomePage(page):
                     weight=ft.FontWeight.W_900,
                 )
             ),
-
-
+            ft.Container(col=3),
+            menu_button,
+            account_button
         ],
         columns=10,
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
 
     game_mode_img = ft.Row(
+        height=400,
         alignment=ft.MainAxisAlignment.CENTER,
         controls=[
             ft.Container(
                 image_src='images/game_mode.webp',
                 image_fit=ft.ImageFit.CONTAIN,
-                width=350,
-                height=200
+                width=400,
+                height=300
             )
         ]
     )
@@ -109,13 +126,11 @@ def HomePage(page):
             expand=True,
         ),
         bgcolor=ft.colors.BLACK54,
-        height=750,
-        width=1100,
+        expand=True,
         alignment=ft.alignment.center,
-        border_radius=ft.border_radius.all(16),
         shadow=ft.BoxShadow(
             color=ft.colors.BLACK,
-            blur_radius=600,
+            blur_radius=800,
             blur_style=ft.ShadowBlurStyle.NORMAL
         )
     )
@@ -127,8 +142,7 @@ def HomePage(page):
         image_src='images/backgroundHome.webp',  
         image_fit=ft.ImageFit.COVER,
     )
+
     page.update()
 
     return window
-
-#Adicionar funcao pra trocar de página ao apertar botao de criar personagem

@@ -7,8 +7,6 @@ from app.interface.home_page import HomePage
 
 def main(page: ft.Page):
 
-    page.window_min_height = 900
-    page.window_min_width = 700
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.padding = 0

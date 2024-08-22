@@ -1,4 +1,5 @@
 from .connections import create_conn, close_conn
+from ..current_user import get_logged_user_id
 
 
 def insert_user(name: str, username: str, password: str) -> None:
@@ -59,4 +60,57 @@ def get_user_id_from_db(username: str) -> any:
     
     except Exception as e:
         print(f'\n Erro ao conectar ou consultar o banco de dados: {e} \n')
+        return None
+    
+
+def check_login_info_in_db(username: str, password: str):
+    try:
+        user_id = get_user_id_from_db(username)
+        
+        if user_id:
+            conn, cursor = create_conn()
+            query = """
+                SELECT password FROM users
+                WHERE user_id = %s
+            """
+            cursor.execute(query, [user_id])
+            rows = cursor.fetchall()
+            close_conn(conn, cursor, commit=False)
+
+            if not rows:
+                print('\n Usuário não encontrado no banco de dados \n')
+                return False
+            
+            password_valid = True if rows[0][0] == password else False
+            
+            if password_valid:
+                print('\n Usuário encontrado e conectado com sucesso \n')
+                return user_id
+            else:
+                print('\n Senha inválida.')
+                return False
+    
+    except Exception as e:
+        print(f'\n Erro ao verificar informações de login no banco de dados: {e} \n')
+        return None
+    
+
+def get_user_picture_from_db() -> str:
+    user_id = get_logged_user_id()
+
+    try:
+        conn, cursor = create_conn()
+        query = """
+            SELECT picture_src FROM characters
+            WHERE user_id = %s
+        """
+        cursor.execute(query, [user_id])
+        rows = cursor.fetchall()
+        close_conn(conn, cursor, commit=False)
+        
+        picture_src = rows[0][0]
+        return picture_src
+    
+    except Exception as e:
+        print(f'\n Erro ao consultar foto de perfil de persongem: {e} \n')
         return None
