@@ -18,9 +18,8 @@ def CreateCharacterPage(page):
         if new_view == 2:
             menu.content.controls[-1] = attributes_menu_content
         if new_view == 3:
-            menu.content.controls[-1] = profile_menu_content
+            menu.content.controls[-1] = profile_menu_content(page)
         page.update()
-
 
     side_bar = ft.NavigationRail(
         col=1,

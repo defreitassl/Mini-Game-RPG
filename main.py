@@ -15,12 +15,11 @@ def main(page: ft.Page):
         'Medieval': 'fonts/Medieval.ttf',
         'Pixeled': 'fonts/Pixeled.ttf'
     }
-    
+
     login_view = ft.View(route='/login', controls=[LoginPage(page)], padding=0)
     create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)], padding=0)
     create_character_view = ft.View(route='/create-character', controls=[CreateCharacterPage(page)], padding=0)
     home_page_view = ft.View(route='/home-page', controls=[HomePage(page)], padding=0)
-
 
     def route_change(route):
         page.views.clear()
@@ -39,5 +38,5 @@ def main(page: ft.Page):
 
     page.on_route_change = route_change
     page.go(page.route)
-    
+
 ft.app(target=main, assets_dir='./assets')
