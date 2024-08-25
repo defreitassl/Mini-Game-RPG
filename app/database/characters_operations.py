@@ -52,7 +52,7 @@ def add_character_id_to_user(current_user_id: int, character_id: int) -> bool:
         """
         cursor.execute(query, [character_id, current_user_id])
         print(f' \n Usuário de id {current_user_id} atualizado com sucesso \n')
-        close_conn(conn, cursor, )
+        close_conn(conn, cursor)
         return True
 
     except Exception as e:
@@ -82,6 +82,37 @@ def get_character_id_from_db(user_id: int):
             return character_id
 
     except Exception as e:
-        print(f'Erro ao buscar ID de usuário no banco de dados: {e}')
+        print(f'\n Erro ao buscar ID de usuário no banco de dados: {e} \n')
         return None
+    
+
+def collect_character_info(user_id: int) -> any:
+    try:
+        conn, cursor = create_conn()
+        query = """
+            SELECT category, age, gender, strength, agility, health, stamina, intelligence, height, body_shape, skin_color, hair_color, biography
+            FROM characters WHERE user_id = %s
+        """
+        cursor.execute(query, [user_id])
+        result = cursor.fetchone()
+        close_conn(conn, cursor, commit=False)
+
+        # Verificando se o resultado foi encontrado
+        if result is None:
+            print('\n Nenhuma informação do personagem encontrada para esse user_id \n')
+            return False
+
+        # Desempacotando o resultado corretamente
+        category, age, gender, strength, agility, health, stamina, intelligence, height, body_shape, skin_color, hair_color, biography = result
+
+        # Verificando se todas as informações são válidas
+        if all([category, age, gender, height, body_shape, skin_color, hair_color, biography]):
+            return category, age, gender, strength, agility, health, stamina, intelligence, height, body_shape, skin_color, hair_color, biography
+        else:
+            print('\n Alguma informação do personagem está inválida ou inexistente \n')
+            return False
+
+    except Exception as e:
+        print(f'\n Erro ao coletar informações do personagem: {e}\n')
+        return False
 

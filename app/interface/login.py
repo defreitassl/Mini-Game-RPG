@@ -92,7 +92,8 @@ def LoginPage(page):
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        spacing=80
+        spacing=80,
+        scroll=ft.ScrollMode.AUTO
     )
 
     inner_container = ft.Container( 

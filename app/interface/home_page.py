@@ -1,19 +1,28 @@
 import flet as ft
+from ..functions.user_log_out import log_out
+from ..functions.show_info import show_user_info
 
-def HomePage(page, picture_src=None):
+original_content = None
+info_displayed = False  
+
+
+def HomePage(page):
+    global original_content, info_displayed  
+
 
     def close_banner(e):
         page.banner.open = False 
         page.update()
+
 
     def open_banner(e):
         page.banner = bn1 
         bn1.open=True 
         page.update()
 
+
     bn1 = ft.Banner(
         content=ft.Text(value="Esta função está temporariamente indisponível"), 
-
         actions=[
             ft.TextButton(text="Cancelar", style=ft.ButtonStyle(color=ft.colors.RED), on_click=close_banner),
         ],
@@ -24,27 +33,23 @@ def HomePage(page, picture_src=None):
     )
 
     menu_button = ft.IconButton(
-        icon=ft.icons.MENU_OUTLINED,
+        icon=ft.icons.EXIT_TO_APP_ROUNDED,
         icon_color=ft.colors.WHITE54,
         height=100,
         icon_size=70,
-        col=1
+        col=1,
+        tooltip='Sair/Desconectar',
+        on_click=lambda e: log_out(page)
     )
 
-    # O valor de picture_src será recebido como parâmetro
-    picture = ft.CircleAvatar(
-        background_image_src=picture_src,  # Atualiza a imagem do avatar com o caminho da imagem passada
-        radius=35,
-        expand=True
-    )
-
-    account_button = ft.ElevatedButton(
-        content=picture,
-        style=ft.ButtonStyle(
-            padding=0,
-            shape=ft.CircleBorder(),
-        ),
-        col=1
+    account_button = ft.IconButton(
+        icon=ft.icons.PERSON,
+        icon_color=ft.colors.WHITE54,
+        height=100,
+        icon_size=70,
+        col=1,
+        tooltip='Visualizar Perfil',
+        on_click=lambda _: toggle_info(menu)
     )
 
     nav_bar = ft.ResponsiveRow(
@@ -64,7 +69,7 @@ def HomePage(page, picture_src=None):
             account_button
         ],
         columns=10,
-        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        vertical_alignment=ft.CrossAxisAlignment.START,
     )
 
     game_mode_img = ft.Row(
@@ -122,8 +127,10 @@ def HomePage(page, picture_src=None):
                 game_mode_img,
                 buttons,
             ],
+            alignment=ft.MainAxisAlignment.START,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True,
+            scroll=ft.ScrollMode.AUTO
         ),
         bgcolor=ft.colors.BLACK54,
         expand=True,
@@ -132,11 +139,12 @@ def HomePage(page, picture_src=None):
             color=ft.colors.BLACK,
             blur_radius=800,
             blur_style=ft.ShadowBlurStyle.NORMAL
-        )
+        ),
+        padding=30
     )
     
     window = ft.Container(
-        content= menu,
+        content=menu,
         alignment=ft.alignment.center,
         expand=True,
         image_src='images/backgroundHome.webp',  
@@ -146,3 +154,20 @@ def HomePage(page, picture_src=None):
     page.update()
 
     return window
+
+
+def toggle_info(main_content: ft.Container):
+    global original_content, info_displayed
+
+    column_in_container = main_content.content
+
+    if info_displayed:
+        column_in_container.controls = original_content
+        info_displayed = False
+
+    else:
+        original_content = column_in_container.controls.copy()
+        show_user_info(main_content)
+        info_displayed = True
+
+    main_content.update()

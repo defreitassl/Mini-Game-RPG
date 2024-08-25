@@ -11,14 +11,17 @@ def CreateCharacterPage(page):
     def change_view(e):
         new_view = e.control.selected_index
         
+        responsive_row.controls.pop()
+        
         if new_view == 0:
-            menu.content.controls[-1] = identity_menu_content
-        if new_view == 1:
-            menu.content.controls[-1] = skills_menu_content
-        if new_view == 2:
-            menu.content.controls[-1] = attributes_menu_content
-        if new_view == 3:
-            menu.content.controls[-1] = profile_menu_content(page)
+            responsive_row.controls.append(identity_menu_content)
+        elif new_view == 1:
+            responsive_row.controls.append(skills_menu_content)
+        elif new_view == 2:
+            responsive_row.controls.append(attributes_menu_content)
+        elif new_view == 3:
+            responsive_row.controls.append(profile_menu_content(page))
+
         page.update()
 
     side_bar = ft.NavigationRail(
@@ -53,14 +56,19 @@ def CreateCharacterPage(page):
         on_change= change_view,
     )
 
+    responsive_row = ft.ResponsiveRow(
+        controls=[
+            side_bar,
+            identity_menu_content,
+        ],
+        columns=10,
+        height=700
+    )
+
     menu = ft.Container(
-        content=ft.ResponsiveRow(
-            controls=[
-                side_bar,
-                identity_menu_content,
-            ],
-            columns=10,
-            expand=True
+        content=ft.Column(
+            controls=[responsive_row],
+            scroll=ft.ScrollMode.AUTO
         ),
         bgcolor=ft.colors.BLACK54,
         height=700,
@@ -71,7 +79,7 @@ def CreateCharacterPage(page):
             color=ft.colors.BLACK,
             blur_radius=600,
             blur_style=ft.ShadowBlurStyle.NORMAL
-        ),
+        )
     )
 
     window = ft.Container(

@@ -119,7 +119,8 @@ def CreateAccountPage(page):
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        spacing=50
+        spacing=50,
+        scroll=ft.ScrollMode.AUTO
     )
 
     window = ft.Container(

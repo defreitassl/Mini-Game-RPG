@@ -32,9 +32,7 @@ def collect_all_info(page):
                 picture_src=selected_picture_src
             )
 
-            page.views.clear()
-            page.views.append(ft.View(route='/home-page', controls=[HomePage(page, picture_src=selected_picture_src)]))
-            page.update()
+            page.go('/home-page')
 
         else:
             print("Por favor, preencha todos os campos antes de criar o personagem.")
