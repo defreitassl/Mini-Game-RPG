@@ -1,2 +1,2 @@
-# Mini-Game-RPG
- Em desenvolvimento
+# Sistema de login Mini-Game RPG
+
