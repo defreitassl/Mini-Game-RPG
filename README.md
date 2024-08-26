@@ -12,8 +12,7 @@ tecnologias e possibilidades.
 Que utiliza a linguagem Flutter por detrás dos panos para a criação de interfaces modernas e atrativas para o usuário.
 
   - ### mysql-connector
-Que faz a conexão entre o Python e o MySQL através de scripts simples de python. Foi utilizado para fazer consultas e operações no
-Banco de Dados, destinado a armazenar as informações dos usuários e dos personagens criados por eles.
+Uma biblioteca que permite a conexão entre Python e MySQL por meio de scripts simples para realizar consultas e operações no banco de dados.
 
 ## Sobre o Projeto
 
@@ -23,21 +22,21 @@ Ou _Criar Conta_ onde o usuário deve inserir seu **nome**, **usuário**, e conf
 criação de personagem, na qual ele customiza totalmente seu personagem, escolhendo todas suas características físicas e outros 
 aspectos como, _foto_, _história_, _inteligência_ e etc...
 
-Todas as informações são armazenadas com segurança no banco de dados para serem acessadas depois. Na paǵina principal
+Todas as informações são armazenadas com segurança no banco de dados para serem acessadas depois. Na página principal
 o usuário tem as opções de _jogar_ e _ver ranking_ que estão temporariamente desabilitados, já que isso não faz parte do briefing do projeto.
 Além disso, há opções para fazer LogOut ou visualizar as características do personagem. Sempre mantendo a **simplicidade** e o **design** 
 atrativo para o usuário.
 
 ### Desenvolvimento
-O desenvolvimento do projeto foi tranquilo, porém demorou devido a diversos problemas e bugs ocasionados pela minha pouca experiência com 
-projetos completos como este. Desde o início pesquisei sobre novas possíveis implementações para que o projeto ficasse o mais profissional
-possível. Fiz o projeto inteiramente em inglês para me acostumar com as nomenclaturas e a escrita.
+O desenvolvimento do projeto foi tranquilo, porém mais demorado do que o esperado devido a problemas e bugs ocasionados pela minha pouca 
+experiência com projetos completos como este. Desde o início, pesquisei sobre novas implementações para tornar o projeto o mais profissional 
+possível. Desenvolvi o projeto inteiramente em inglês para me familiarizar com as nomenclaturas e a escrita técnica.
 
 A experiência que ganhei com esse projeto foi imensurável. Fiz tudo sozinho, utilizando a ajuda de **IAs** apenas para **aprender** novas tecnologias
 e implementações, e **nunca para escrever** o código por mim.
 
 ### Detalhes
-Procurei fazer um código que facilitasse minha prória compreensão e depuração do mesmo, Criando classes e várias funções em diferentes 
+Procurei fazer um código que facilitasse minha própria compreensão e depuração do mesmo, criando classes e várias funções em diferentes 
 arquivos para manter a organização e o fácil entendimento desde o início.
 
  - **Logs:** Criei um simples sistema de _logs_ de ações que estão sendo executadas no momento pelo terminal. Para que eu pudesse ver onde o
@@ -83,7 +82,7 @@ connection = mysql.connector.connect(
         )
 ```
 
-troque as informações _host_, _user_ e _passwword_ conforme as suas próprias. 
+troque as informações _host_, _user_ e _password_ conforme as suas próprias. 
 
 #### Finalmente, você tem o projeto pronto para uso! Basta executar o arquivo main.py localizado no diretório raiz do projeto!
 ## Aproveite!
