@@ -40,9 +40,21 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
             print(new_user)
             new_user._insert_user_in_db()
             user_id = get_user_id_from_db(username_value)
+            
             if user_id:
+               
                 set_logged_user_id(user_id=user_id)
                 page.go('/create-character')
+                
+                name.value = ''
+                name.error_text = None
+                username.value = ''
+                username.error_text = None
+                password.value = ''
+                password.error_text = None
+                conf_password.value = ''
+                conf_password.error_text = None
+            
             else:
                 pass
         
@@ -55,6 +67,7 @@ def verify_name(name: str) -> bool:
     ver_name = name.split()
 
     if len(ver_name) == 2 and ver_name[0].isalpha() == True and ver_name[1].isalpha() == True:
+        
         print('Nome ok \n')
         return True
     
@@ -72,6 +85,7 @@ def verify_username(username: str) -> bool:
         ver_username = username.split()
 
         if len(ver_username) > 1 or len(username) < 4:
+            
             print('NomeDeUsuárioInválido: Contém espaços ou menos de 4 caracteres \n')
             return False
         
@@ -88,10 +102,12 @@ def verify_password(password: str, conf_password: str) -> bool:
     ver_password = password.split()
 
     if len(ver_password) > 1 or len(password) < 8:
+        
         print('SenhaInválida: Contém espaços ou menos de 8 caracteres \n')
         return False
     
     elif password.isalpha() == True:
+        
         print('SenhaFraca: Adicione no números ou caracteres especiais \n')
         return False
 

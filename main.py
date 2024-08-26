@@ -6,11 +6,6 @@ from app.interface.home_page import HomePage
 
 def route_change(page):
 
-
-    #Adicionar funcao para limpar inputs de create-account
-
-
-
     login_view = ft.View(route='/login', controls=[LoginPage(page)], padding=0)
     create_account_view = ft.View(route='/create-account', controls=[CreateAccountPage(page)], padding=0)
     create_character_view = ft.View(route='/create-character', controls=[CreateCharacterPage(page)], padding=0)
