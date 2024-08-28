@@ -1,17 +1,18 @@
 import flet as ft
 from ..functions.verify_login_info import verify_login_info
 
-
+# Função para limpar os inputs de username e password, resetando seus valores e mensagens de erro
 def clean_inputs(username_input, password_input):
     username_input.value = ''
     password_input.value = ''
     username_input.error_text = None
     password_input.error_text = None
     
+    # Atualiza os campos de texto na interface
     username_input.update()
     password_input.update()
 
-
+# Campo de texto para o nome de usuário com configurações de estilo e placeholders
 username = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='archer_123',
@@ -23,6 +24,7 @@ username = ft.TextField(
     error_style=ft.TextStyle(color=ft.colors.BLACK)
 )
 
+# Campo de texto para a senha com configurações de estilo e placeholders
 password = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='Ex:14Archer_##',
@@ -31,14 +33,14 @@ password = ft.TextField(
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PASSWORD,
     password=True,
-    can_reveal_password=True,
+    can_reveal_password=True,  # Permite que a senha seja revelada
     error_style=ft.TextStyle(color=ft.colors.BLACK)
 )
 
-
+# Função que retorna a página de login
 def LoginPage(page):
 
-
+    # Botão de login que chama a função de verificação de login ao ser clicado
     login_button = ft.ElevatedButton(
         content=ft.Text(
             "Entrar..",
@@ -52,9 +54,10 @@ def LoginPage(page):
             bgcolor=ft.colors.RED_800
         ),
         width=250,
-        on_click=lambda _: verify_login_info(page, username, password)
+        on_click=lambda _: verify_login_info(page, username, password)  # Chama a função de verificação de login
     )
 
+    # Componentes da página de login organizados em uma coluna
     components = ft.Column(
         controls=[
             ft.Text(
@@ -65,14 +68,14 @@ def LoginPage(page):
                     color=ft.colors.BLACK
                 )
             ),
-            username,
-            password,
+            username,  # Campo de texto do username
+            password,  # Campo de texto da senha
             ft.Column(
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 controls=[
                     ft.Row(
                         controls=[
-                            login_button,
+                            login_button,  # Botão de login
                         ],
                         alignment=ft.MainAxisAlignment.CENTER
                     ),
@@ -93,6 +96,7 @@ def LoginPage(page):
                                     font_family='Medieval',
                                     size=20
                                 ),
+                                # Redireciona para a página de criação de conta e limpa os inputs ao ser clicado
                                 on_click= lambda _: (page.go('/create-account'), clean_inputs(username, password))
                             )
                         ],
@@ -104,9 +108,10 @@ def LoginPage(page):
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         spacing=80,
-        scroll=ft.ScrollMode.AUTO
+        scroll=ft.ScrollMode.AUTO  # Permite rolagem na coluna, caso necessário
     )
 
+    # Container interno que contém todos os componentes da página
     inner_container = ft.Container( 
         content=ft.Container(
             content=components,
@@ -123,13 +128,14 @@ def LoginPage(page):
         ),
         alignment=ft.alignment.center,
         expand=True,
-        image_src='images/backgroundLogin.webp',  
-        image_fit=ft.ImageFit.COVER,   
+        image_src='images/backgroundLogin.webp',  # Imagem de fundo da página
+        image_fit=ft.ImageFit.COVER,  # Ajusta a imagem de fundo para cobrir todo o container  
     )
     
+    # Container principal que expande para preencher a tela
     window = ft.Container(
         content= inner_container,
         expand=True,
     )
 
-    return window
+    return window  # Retorna a página de login completa

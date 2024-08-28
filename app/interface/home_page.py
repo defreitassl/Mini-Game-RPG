@@ -2,25 +2,26 @@ import flet as ft
 from ..functions.user_log_out import log_out
 from ..functions.show_info import show_user_info
 
+# Variáveis globais para armazenar o conteúdo original e rastrear se as informações do personagem estão sendo exibidas
 original_content = None
 info_displayed = False  
 
-
+# Função que define a página principal do aplicativo
 def HomePage(page):
     global original_content, info_displayed  
 
-
+    # Função para fechar o banner de aviso
     def close_banner(e):
         page.banner.open = False 
         page.update()
 
-
+    # Função para abrir o banner de aviso
     def open_banner(e):
         page.banner = bn1 
         bn1.open=True 
         page.update()
 
-
+    # Definição do banner de aviso que será exibido temporariamente
     bn1 = ft.Banner(
         content=ft.Text(value="Esta função está temporariamente indisponível"), 
         actions=[
@@ -32,6 +33,7 @@ def HomePage(page):
         bgcolor=ft.colors.AMBER_100
     )
 
+    # Botão para desconectar/log out do sistema
     menu_button = ft.IconButton(
         icon=ft.icons.EXIT_TO_APP_ROUNDED,
         icon_color=ft.colors.WHITE54,
@@ -39,9 +41,10 @@ def HomePage(page):
         icon_size=70,
         col=1,
         tooltip='Sair/Desconectar',
-        on_click=lambda e: log_out(page)
+        on_click=lambda e: log_out(page)  # Chama a função de logout ao clicar
     )
 
+    # Botão para visualizar as informações do perfil do usuário
     account_button = ft.IconButton(
         icon=ft.icons.PERSON,
         icon_color=ft.colors.WHITE54,
@@ -49,9 +52,10 @@ def HomePage(page):
         icon_size=70,
         col=1,
         tooltip='Visualizar Perfil',
-        on_click=lambda _: toggle_info(menu)
+        on_click=lambda _: toggle_info(menu)  # Alterna entre mostrar/esconder informações do perfil
     )
 
+    # Barra de navegação contendo o título do jogo e os botões de logout e perfil
     nav_bar = ft.ResponsiveRow(
         controls=[
             ft.Container(
@@ -72,6 +76,7 @@ def HomePage(page):
         vertical_alignment=ft.CrossAxisAlignment.START,
     )
 
+    # Imagem representando o modo de jogo
     game_mode_img = ft.Row(
         height=400,
         alignment=ft.MainAxisAlignment.CENTER,
@@ -85,6 +90,7 @@ def HomePage(page):
         ]
     )
 
+    # Coluna de botões para "JOGAR" e "RANKING"
     buttons = ft.Column(
         controls=[
             ft.ElevatedButton(
@@ -100,7 +106,7 @@ def HomePage(page):
                     bgcolor=ft.colors.GREEN_500
                 ),
                 width=300,
-                on_click= open_banner
+                on_click= open_banner  # Exibe o banner de aviso ao clicar
             ),
             ft.ElevatedButton(
                 content=ft.Text(
@@ -115,11 +121,12 @@ def HomePage(page):
                     bgcolor=ft.colors.AMBER_700
                 ),
                 width=300,
-                on_click= open_banner
+                on_click= open_banner  # Exibe o banner de aviso ao clicar
             ),
         ]
     )
     
+    # Menu principal contendo a barra de navegação, a imagem do modo de jogo e os botões
     menu = ft.Container(
         content=ft.Column(
             controls=[
@@ -143,6 +150,7 @@ def HomePage(page):
         padding=30
     )
     
+    # Contêiner que encapsula todo o conteúdo da página, incluindo o fundo de tela
     window = ft.Container(
         content=menu,
         alignment=ft.alignment.center,
@@ -151,23 +159,25 @@ def HomePage(page):
         image_fit=ft.ImageFit.COVER,
     )
 
-    page.update()
+    page.update()  # Atualiza a página
 
-    return window
+    return window  # Retorna a janela principal
 
-
+# Função que alterna entre exibir as informações do usuário ou o conteúdo original da página
 def toggle_info(main_content: ft.Container):
     global original_content, info_displayed
 
     column_in_container = main_content.content
 
     if info_displayed:
+        # Retorna o conteúdo original da página
         column_in_container.controls = original_content
         info_displayed = False
 
     else:
+        # Salva o conteúdo atual e exibe as informações do usuário
         original_content = column_in_container.controls.copy()
         show_user_info(main_content)
         info_displayed = True
 
-    main_content.update()
+    main_content.update()  # Atualiza o conteúdo da página

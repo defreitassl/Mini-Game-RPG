@@ -6,16 +6,21 @@ from .skills_menu import skills_confirm_button, forca, agilidade, energia, vida,
 from .attributes_menu import attributes_confirm_button, character_shape, character_height, get_skin_color, get_hair_color
 from ..home_page import HomePage
 
+# Função para coletar todas as informações do personagem e enviá-las para o banco de dados
 def collect_all_info(page):
     
+    # Verifica se a biografia possui mais de 50 caracteres e se uma foto de perfil foi selecionada
     if len(character_bio.value) > 50 and selected_picture_src is not None:
+        # Verifica se todos os campos foram confirmados
         if all([identity_confirm_button.disabled, skills_confirm_button.disabled, attributes_confirm_button.disabled]):
+            # Define o gênero do personagem com base na seleção do usuário
             gender = 'Feminino' if feminine_check.value else 'Masculino'
 
+            # Coleta a cor da pele e do cabelo
             skin_color = get_skin_color()
             hair_color = get_hair_color()
             
-            # Chama a função de coleta com todos os atributos
+            # Chama a função para coletar e salvar as informações no banco de dados
             collect_character_info(
                 category=character_class.value, 
                 age=character_age.value, 
@@ -33,30 +38,35 @@ def collect_all_info(page):
                 picture_src=selected_picture_src
             )
 
+            # Redireciona para a página principal
             page.go('/home-page')
 
         else:
             print("Por favor, preencha todos os campos antes de criar o personagem.")
     else:
+        # Exibe uma mensagem de erro se a biografia for muito curta ou se não houver foto de perfil selecionada
         print("A biografia deve conter no mínimo 50 caracteres e uma foto de perfil deve ser selecionada.")
         character_bio.error_text = "A biografia deve conter no mínimo 50 caracteres"
         character_bio.update()
-        sleep(3)
+        sleep(3)  # Pausa por 3 segundos para mostrar a mensagem de erro
         character_bio.error_text = ""
         character_bio.update()
 
+# Função para contar os caracteres da biografia em tempo real
 def count_characters(e):
     num_characters = len(e.control.value)
     e.control.counter_text = num_characters
     e.control.update()
 
-
+# Variável global para armazenar o caminho da foto de perfil selecionada
 selected_picture_src = None
+
+# Função para selecionar a foto de perfil do personagem
 def select_picture(e):
     global selected_picture_src
     selected_picture_src = e.control.data
 
-
+# Gerador de avatares para seleção
 index = 0
 def create_profile_avatars():
     global index
@@ -78,7 +88,7 @@ def create_profile_avatars():
         )
         yield button
 
-
+# Campo de texto para a biografia do personagem
 character_bio = ft.TextField(
     bgcolor=ft.colors.GREY_400,
 
@@ -98,11 +108,13 @@ character_bio = ft.TextField(
     min_lines=3,
     max_lines=5,
 
-    on_change=count_characters
+    on_change=count_characters  # Atualiza o contador de caracteres em tempo real
 )
 
+# Gera os avatares para a seleção
 picture_gen = create_profile_avatars()
 
+# Função para gerar o conteúdo do menu de perfil, incluindo seleção de avatar e biografia
 def profile_menu_content(page):
 
     create_button = ft.ElevatedButton(
@@ -118,7 +130,7 @@ def profile_menu_content(page):
             bgcolor=ft.colors.AMBER_700
         ),
         width=400,
-        on_click=lambda _: collect_all_info(page)
+        on_click=lambda _: collect_all_info(page)  # Chama a função para coletar todas as informações ao clicar
     )
 
     return ft.Column(
@@ -142,7 +154,7 @@ def profile_menu_content(page):
                             color=ft.colors.GREY_700
                         ),
                         ft.Row(
-                            controls=[next(picture_gen) for _ in range(6)],
+                            controls=[next(picture_gen) for _ in range(6)],  # Gera os botões de seleção de avatar
                         )
                     ],
                 ),
@@ -156,13 +168,13 @@ def profile_menu_content(page):
                             font_family='Pixeled',
                             color=ft.colors.GREY_700
                         ),
-                        character_bio
+                        character_bio  # Campo de texto para inserir a biografia
                     ]
                 ),
                 width=500
             ),
             ft.Container(
-                content=create_button
+                content=create_button  # Botão para criar o personagem
             )
         ],
         alignment=ft.MainAxisAlignment.CENTER,

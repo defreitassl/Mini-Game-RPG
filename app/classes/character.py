@@ -1,7 +1,10 @@
 from ..database.characters_operations import insert_character, add_character_id_to_user, get_character_id_from_db
 
 class Character:
-
+    """
+    Classe que representa um personagem no jogo. 
+    Contém todos os atributos do personagem e métodos para manipulação de dados relacionados ao personagem.
+    """
 
     def __init__(self, user_id: int, category: str, age: int, 
         gender: str, strength: int, agility: int, health: int,
@@ -9,6 +12,7 @@ class Character:
         body_shape: str, skin_color: str, hair_color: str,
         biography: str, picture_src: str) -> None:
         
+        # Atributos do personagem
         self.user_id = user_id
         self.category = category
         self.age = age
@@ -25,8 +29,12 @@ class Character:
         self.biography = biography
         self.picture = picture_src
 
-
     def _insert_character_in_db(self):
+        """
+        Insere o personagem no banco de dados, vinculando-o ao usuário que o criou.
+        Atualiza o ID do personagem no registro do usuário após a inserção.
+        """
+        # Insere o personagem no banco de dados
         insert_character(
             user_id=self.user_id,
             category=self.category,
@@ -44,7 +52,9 @@ class Character:
             biography=self.biography,
             picture_src=self.picture
         )
+        # Obtém o ID do personagem recém-criado
         character_id = get_character_id_from_db(self.user_id)
+        # Atualiza o registro do usuário com o ID do personagem
         update_user = add_character_id_to_user(self.user_id, character_id)
         
         if update_user:
@@ -52,8 +62,11 @@ class Character:
         else:
             print("Falha ao atualizar o usuário.")
 
-    
     def __str__(self):
+        """
+        Retorna uma string formatada contendo todas as informações do personagem.
+        Útil para depuração ou exibição das características do personagem.
+        """
         return f"""
             Personagem:
 
@@ -72,6 +85,3 @@ class Character:
             Biografia: {self.biography}
             Foto de Perfil: {self.picture}
         """
-    
-
-

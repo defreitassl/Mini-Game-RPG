@@ -14,15 +14,19 @@ hair_color_names = {}
 selected_skin_color = None
 selected_hair_color = None
 
+
 def get_skin_color():
     return selected_skin_color
+
 
 def get_hair_color():
     return selected_hair_color
 
+
 # Função chamada quando um botão de cor é clicado
 def select_color(e):
     global selected_skin_color, selected_hair_color
+
 
     # Verifica qual tipo de cor está sendo selecionado
     if e.control in skin_color_buttons:
@@ -33,6 +37,7 @@ def select_color(e):
         selected_hair_color = hair_color_names[e.control]
 
     e.page.update()
+
 
 def apply_attributes(e):
     # Verifica se todos os campos foram preenchidos
@@ -64,6 +69,7 @@ def apply_attributes(e):
     else:
         print("\n Preencha todos os atributos antes de confirmar. \n")
 
+
 def generator_colors():
     global index
     colors = {
@@ -78,6 +84,7 @@ def generator_colors():
         index += 1
 
 color_gen = generator_colors()
+
 
 def create_color_button(color_type):
     name, color = next(color_gen)
@@ -98,6 +105,7 @@ def create_color_button(color_type):
         hair_color_names[button] = name
 
     return button
+
 
 character_height = ft.Slider(
     min=10,

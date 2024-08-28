@@ -1,23 +1,27 @@
 import flet as ft
 from ..functions.collect_account_info import collect_account_info
 
-
+# Função para limpar os inputs de nome, nome de usuário, senha e confirmação de senha
 def clean_inputs(name_input, username_input, password_input, conf_password_input):
+    # Reseta os valores dos campos de entrada
     name_input.value = ""
     username_input.value = ""
     password_input.value = ""
     conf_password_input.value = ""
 
+    # Remove mensagens de erro
     name_input.error_text = None
     username_input.error_text = None
     password_input.error_text = None
     conf_password_input.error_text = None
 
+    # Atualiza os campos de texto na interface
     name_input.update()
     username_input.update()
     password_input.update()
     conf_password_input.update()
 
+# Campo de texto para o nome completo do usuário com configurações de estilo e placeholders
 name = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='PrimeiroNome ÚltimoNome',
@@ -26,9 +30,10 @@ name = ft.TextField(
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PERSON,
     error_style=ft.TextStyle(color='black'),
-    helper_text= 'apenas nome e último nome / apenas letras permitidas'
+    helper_text='apenas nome e último nome / apenas letras permitidas'
 )
 
+# Campo de texto para o nome de usuário com configurações de estilo e placeholders
 username = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='archer_123',
@@ -38,9 +43,10 @@ username = ft.TextField(
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.ALTERNATE_EMAIL_ROUNDED,
     error_style=ft.TextStyle(color='black'),
-    helper_text= 'mínimo de 4 caracteres / proibido espaços'
+    helper_text='mínimo de 4 caracteres / proibido espaços'
 )
 
+# Campo de texto para a senha com configurações de estilo e placeholders
 password = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='Ex:14Archer_##',
@@ -48,12 +54,13 @@ password = ft.TextField(
     label='Insira sua senha..',
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PASSWORD,
-    password=True,
-    can_reveal_password=True,
+    password=True,  # Oculta a senha por padrão
+    can_reveal_password=True,  # Permite revelar a senha
     error_style=ft.TextStyle(color='black'),
-    helper_text= 'mínimo 8 caracteres'
+    helper_text='mínimo 8 caracteres'
 )
 
+# Campo de texto para a confirmação da senha com as mesmas configurações do campo de senha
 password_confirmation = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='Ex:14Archer_##',
@@ -61,14 +68,15 @@ password_confirmation = ft.TextField(
     label='Confirme sua senha..',
     label_style=ft.TextStyle(font_family='Pixeled', size=10),
     icon=ft.icons.PASSWORD,
-    password=True,
-    can_reveal_password=True,
+    password=True,  # Oculta a senha por padrão
+    can_reveal_password=True,  # Permite revelar a senha
     error_style=ft.TextStyle(color='black')
 )
 
-
+# Função que retorna a página de criação de conta
 def CreateAccountPage(page):
 
+    # Botão para criar a conta que chama a função de coleta de informações ao ser clicado
     create_account_button = ft.ElevatedButton(
         content=ft.Text(
             "Criar Conta..",
@@ -81,10 +89,11 @@ def CreateAccountPage(page):
             shape=ft.RoundedRectangleBorder(radius=0),
             bgcolor=ft.colors.RED_800
         ),
-        on_click= lambda _: collect_account_info(page, name=name, username=username, password=password, conf_password=password_confirmation),
+        on_click=lambda _: collect_account_info(page, name=name, username=username, password=password, conf_password=password_confirmation),
         width=250
     )
 
+    # Componentes da página de criação de conta organizados em uma coluna
     components = ft.Column(
         controls=[
             ft.Text(
@@ -95,16 +104,16 @@ def CreateAccountPage(page):
                     color=ft.colors.BLACK
                 )
             ),
-            name,
-            username,
-            password,
-            password_confirmation,
+            name,  # Campo de texto para o nome
+            username,  # Campo de texto para o nome de usuário
+            password,  # Campo de texto para a senha
+            password_confirmation,  # Campo de texto para a confirmação de senha
             ft.Column(
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 controls=[
                     ft.Row(
                         controls=[
-                            create_account_button,
+                            create_account_button,  # Botão para criar a conta
                         ],
                         alignment=ft.MainAxisAlignment.CENTER
                     ),
@@ -125,6 +134,7 @@ def CreateAccountPage(page):
                                     font_family='Medieval',
                                     size=20
                                 ),
+                                # Redireciona para a página de login e limpa os inputs ao ser clicado
                                 on_click=lambda _: (page.go('/login'), clean_inputs(name, username, password, password_confirmation))
                             )
                         ],
@@ -136,9 +146,10 @@ def CreateAccountPage(page):
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         spacing=50,
-        scroll=ft.ScrollMode.AUTO
+        scroll=ft.ScrollMode.AUTO  # Permite rolagem na coluna, caso necessário
     )
 
+    # Container principal que envolve os componentes da página
     window = ft.Container(
         content=ft.Container(
             content=components,
@@ -155,8 +166,8 @@ def CreateAccountPage(page):
         ),
         alignment=ft.alignment.center,
         expand=True,
-        image_src='images/backgroundLogin.webp',  
-        image_fit=ft.ImageFit.COVER,   
+        image_src='images/backgroundLogin.webp',  # Imagem de fundo da página
+        image_fit=ft.ImageFit.COVER,  # Ajusta a imagem de fundo para cobrir todo o container  
     )
 
-    return window
+    return window  # Retorna a página de criação de conta completa

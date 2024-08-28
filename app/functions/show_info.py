@@ -5,6 +5,15 @@ from ..database.users_operations import get_user_picture_from_db
 
 #Função que busca todas as infos do personagem para que ele possa vizualiza-las melhor
 def show_user_info(main_content: ft.Container):
+    """
+    Exibe as informações do personagem do usuário logado na interface.
+
+    Args:
+        main_content (ft.Container): O container principal que contém o conteúdo atual da página.
+
+    Returns:
+        None
+    """
     
     column_in_container = main_content.content    #Seleciona a coluna interna do container principal
     column_controls = column_in_container.controls    #Seleciona o conteúdo da coluna

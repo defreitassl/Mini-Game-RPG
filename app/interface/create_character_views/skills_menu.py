@@ -9,6 +9,7 @@ stat_fields = {}
 # Dicionário para armazenar as referências aos botões de adicionar e remover
 button_fields = {}
 
+
 def minus_click(e):
     global points_left
     stat_name = e.control.data
@@ -18,6 +19,7 @@ def minus_click(e):
         points.value = f'PONTOS {points_left}'
         e.page.update()
 
+
 def plus_click(e):
     global points_left
     stat_name = e.control.data
@@ -26,6 +28,7 @@ def plus_click(e):
         points_left -= 1
         points.value = f'PONTOS {points_left}'
         e.page.update()
+
 
 def create_stat_number(stat_name):
     # Cria um campo de texto desabilitado para exibir a pontuação de uma habilidade
@@ -42,6 +45,7 @@ def create_stat_number(stat_name):
     stat_fields[stat_name] = field  # Armazena a referência do campo de texto
     return field
 
+
 def create_stat_buttons(stat_name):
     # Cria os botões de adicionar e remover e armazena suas referências
     minus_button = ft.IconButton(icon=ft.icons.REMOVE, on_click=minus_click, icon_color='white', data=stat_name)
@@ -51,6 +55,7 @@ def create_stat_buttons(stat_name):
     button_fields[f'plus_{stat_name}'] = plus_button
     
     return minus_button, plus_button
+
 
 def apply_attributes(e):
     global points_left
