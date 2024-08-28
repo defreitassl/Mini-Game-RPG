@@ -1,4 +1,4 @@
-from ..current_user import set_logged_user_id, set_logged_user_picture
+from ..current_user import set_logged_user_id
 
 
 def log_out(page):
@@ -7,7 +7,6 @@ def log_out(page):
 
     # Limpa as informações do usuário logado
     set_logged_user_id(None)
-    set_logged_user_picture(None)
 
     page.go('/login')
     print("Reiniciando a página e navegando para a tela de login...")
