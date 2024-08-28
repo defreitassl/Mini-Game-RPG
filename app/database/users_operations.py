@@ -95,6 +95,30 @@ def check_login_info_in_db(username: str, password: str):
         return None
     
 
+def get_user_hashed_password_from_db(username: str) -> str:
+    try:
+        conn, cursor = create_conn()
+        query = """
+            SELECT password FROM users
+            WHERE username = %s
+        """
+        cursor.execute(query, [username])
+        rows = cursor.fetchall()
+        close_conn(conn, cursor, commit=False)
+
+        if not rows:
+            print('\n Usuário não encontrado na base de dados \n')
+            return None
+        
+        else:
+            hashed_password = rows[0][0]
+            return hashed_password
+    
+    except Exception as e:
+        print(f'\n Erro ao conectar ou consultar o banco de dados: {e} \n')
+        return None
+    
+
 def get_user_picture_from_db() -> str:
     user_id = get_logged_user_id()
 

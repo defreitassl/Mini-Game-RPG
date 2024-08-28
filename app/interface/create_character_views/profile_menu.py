@@ -1,4 +1,5 @@
 import flet as ft
+from time import sleep
 from ...functions.collect_character_info import collect_character_info
 from .identity_menu import identity_confirm_button, character_class, character_age, feminine_check
 from .skills_menu import skills_confirm_button, forca, agilidade, energia, vida, inteligencia
@@ -38,6 +39,11 @@ def collect_all_info(page):
             print("Por favor, preencha todos os campos antes de criar o personagem.")
     else:
         print("A biografia deve conter no mínimo 50 caracteres e uma foto de perfil deve ser selecionada.")
+        character_bio.error_text = "A biografia deve conter no mínimo 50 caracteres"
+        character_bio.update()
+        sleep(3)
+        character_bio.error_text = ""
+        character_bio.update()
 
 def count_characters(e):
     num_characters = len(e.control.value)
@@ -86,6 +92,7 @@ character_bio = ft.TextField(
     counter_text='',
     counter_style=ft.TextStyle(font_family='Pixeled'),
     text_style=ft.TextStyle(font_family='Pixeled'),
+    error_style=ft.TextStyle(color=ft.colors.WHITE54),
 
     multiline=True,
     min_lines=3,
@@ -111,7 +118,7 @@ def profile_menu_content(page):
             bgcolor=ft.colors.AMBER_700
         ),
         width=400,
-        on_click=lambda _: collect_all_info(page)  # Passa o page aqui
+        on_click=lambda _: collect_all_info(page)
     )
 
     return ft.Column(

@@ -1,6 +1,17 @@
 import flet as ft
 from ..functions.verify_login_info import verify_login_info
 
+
+def clean_inputs(username_input, password_input):
+    username_input.value = ''
+    password_input.value = ''
+    username_input.error_text = None
+    password_input.error_text = None
+    
+    username_input.update()
+    password_input.update()
+
+
 username = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='archer_123',
@@ -82,7 +93,7 @@ def LoginPage(page):
                                     font_family='Medieval',
                                     size=20
                                 ),
-                                on_click= lambda _: page.go('/create-account'), 
+                                on_click= lambda _: (page.go('/create-account'), clean_inputs(username, password))
                             )
                         ],
                         alignment=ft.MainAxisAlignment.CENTER

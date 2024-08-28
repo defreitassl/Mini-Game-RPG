@@ -2,6 +2,22 @@ import flet as ft
 from ..functions.collect_account_info import collect_account_info
 
 
+def clean_inputs(name_input, username_input, password_input, conf_password_input):
+    name_input.value = ""
+    username_input.value = ""
+    password_input.value = ""
+    conf_password_input.value = ""
+
+    name_input.error_text = None
+    username_input.error_text = None
+    password_input.error_text = None
+    conf_password_input.error_text = None
+
+    name_input.update()
+    username_input.update()
+    password_input.update()
+    conf_password_input.update()
+
 name = ft.TextField(
     text_style=ft.TextStyle(font_family='Pixeled', size=10),
     hint_text='PrimeiroNome ÚltimoNome',
@@ -109,7 +125,7 @@ def CreateAccountPage(page):
                                     font_family='Medieval',
                                     size=20
                                 ),
-                                on_click=lambda _: page.go('/login')
+                                on_click=lambda _: (page.go('/login'), clean_inputs(name, username, password, password_confirmation))
                             )
                         ],
                         alignment=ft.MainAxisAlignment.CENTER

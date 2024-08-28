@@ -1,9 +1,9 @@
+import bcrypt
 from ..classes.user import User
 from ..database.users_operations import verify_username_not_in_db, get_user_id_from_db
 from ..current_user import set_logged_user_id
 
-
-def collect_account_info(page ,name, username, password, conf_password) -> None:
+def collect_account_info(page, name, username, password, conf_password) -> None:
     
     name_value = name.value
     username_value = username.value
@@ -14,7 +14,6 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
     username_valid = verify_username(username_value)
     password_valid = verify_password(password_value, conf_password_value)
 
-
     if not name_valid:
         name.error_text = 'Nome inválido'
         name.update()
@@ -24,11 +23,9 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
         username.update()
 
     if not password_valid:
-
         if password_value != conf_password_value:
             conf_password.error_text = 'Senha incorreta tente novamente'
             conf_password.update()
-
         else:
             password.error_text = 'Senha fraca ou inválida'
             password.update()
@@ -36,16 +33,19 @@ def collect_account_info(page ,name, username, password, conf_password) -> None:
     if all([name_valid, username_valid, password_valid]) == True:
         
         try:
-            new_user = User(name=name_value, username=username_value, password=password_value)
+            # Gerando o hash da senha e convertendo para string
+            hashed_password = bcrypt.hashpw(password_value.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+            new_user = User(name=name_value, username=username_value, password=hashed_password)
             print(new_user)
             new_user._insert_user_in_db()
             user_id = get_user_id_from_db(username_value)
             
             if user_id:
-               
                 set_logged_user_id(user_id=user_id)
                 page.go('/create-character')
                 
+                # Limpa os valores dos campos
                 name.value = ''
                 name.error_text = None
                 username.value = ''
