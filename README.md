@@ -14,6 +14,9 @@ Que utiliza a linguagem Flutter por detrás dos panos para a criação de interf
   - ### mysql-connector-python
 Uma biblioteca que permite a conexão entre Python e MySQL por meio de scripts simples para realizar consultas e operações no banco de dados.
 
+  - ### bycrypt
+Uma biblioteca usada para transformar strings como, senhas, em hashs de bytes, para melhor segurança ao salvar as senhas em banco de dados. 
+
 ## Sobre o Projeto
 
 O projeto consiste em um sistema de login e customização de personagem simples. Inicia-se com as opções de _Login_ onde o usuário que já
