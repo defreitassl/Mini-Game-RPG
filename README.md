@@ -11,7 +11,7 @@ tecnologias e possibilidades.
   - ### Flet
 Que utiliza a linguagem Flutter por detrás dos panos para a criação de interfaces modernas e atrativas para o usuário.
 
-  - ### mysql-connector
+  - ### mysql-connector-python
 Uma biblioteca que permite a conexão entre Python e MySQL por meio de scripts simples para realizar consultas e operações no banco de dados.
 
 ## Sobre o Projeto
